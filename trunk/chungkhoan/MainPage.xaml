@@ -1,0 +1,63 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="PhoneApp1.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Control="clr-namespace:PhoneApp1.Control" xmlns:Controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" mc:Ignorable="d" d:DesignWidth="728" d:DesignHeight="480"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="PortraitOrLandscape" Orientation="LandscapeLeft"
+    shell:SystemTray.IsVisible="False">
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+        <Grid Width="720">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Controls:PerformanceProgressBar x:Name="progressBar" Width="500" Height="10" Visibility="Collapsed"/>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal" x:Name="spButtons">
+                <Button x:Name="btnAll" Content="All"/>
+                <Button x:Name="btnTran" Content="Tran"/>
+                <Button x:Name="btnSan" Content="San"/>
+                <Button x:Name="btnThamChieu" Content="TC"/>
+                <Button x:Name="btnVN30" Content="VN30"/>
+                <Button x:Name="btnHot" Content="Hot"/>
+                <TextBox x:Name="txtSearch" Width="90" TabIndex="-1">
+                    <TextBox.InputScope>
+                        <InputScope>
+                            <InputScopeName NameValue="Search" />
+                        </InputScope>
+                    </TextBox.InputScope>
+                </TextBox>
+            </StackPanel>
+            <Control:SecurityTable Grid.Row="2" x:Name="securityTable"/>
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Control:Statistic Grid.Column="0" x:Name="statistic"/>
+                <TextBlock x:Name="tbCount" Grid.Column="1" Margin="3"/>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+    <!--Sample code showing usage of ApplicationBar-->
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton x:Name="appBtnRefresh" IconUri="/Images/appbar.feature.settings.rest.png" Text="Hot list" Click="appBtnHotList_Click" />
+            <shell:ApplicationBarIconButton x:Name="appBtnHotList" IconUri="/Images/appbar.refresh.rest.png" Text="Refresh" Click="appBtnRefresh_Click" />
+            <shell:ApplicationBarIconButton x:Name="appBtnFile" IconUri="/Images/appbar.edit.rest.png" Text="File" Click="appBtnFile_Click" />
+            <!--<shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="MenuItem 1"/>
+                <shell:ApplicationBarMenuItem Text="MenuItem 2"/>
+            </shell:ApplicationBar.MenuItems>-->
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</phone:PhoneApplicationPage>

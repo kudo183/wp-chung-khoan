@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="PhoneApp1.Control.SecurityTable"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:my="clr-namespace:PhoneApp1" 
+             xmlns:Converter="clr-namespace:PhoneApp1.Converter" 
+             mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}" d:DesignWidth="800"
+              d:DataContext="{d:DesignData Source=../SampleData/RowDataSampleCollectionData.xaml}">
+
+    <UserControl.Resources>
+        <Converter:EvenOddColorConvert x:Key="evenOddColorConvert"/>
+    </UserControl.Resources>
+
+    <Grid x:Name="LayoutRoot">
+        <ListBox ItemsSource="{Binding}" x:Name="listBox" SelectedValuePath="MaCk">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Background="{Binding Path=Num, Converter={StaticResource evenOddColorConvert}}">
+                        <my:Row/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</UserControl>
