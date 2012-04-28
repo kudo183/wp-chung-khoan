@@ -16,6 +16,7 @@
                TextColorBan3="White"
                TextColorBan2="White"
                TextColorBan1="White"
+               TenCty="Dai"
                />
     <local:RowData xmlns:local="clr-namespace:PhoneApp1" 
                MaCk="SSI" MaCkDisplay="SSI*" ThamChieu="7.6" Tran="7.9" San="7.3"
@@ -34,5 +35,25 @@
                TextColorBan3="White"
                TextColorBan2="White"
                TextColorBan1="White"
+               TenCty="Dai daidaiad fiasdif asdf asidf asdfias difsidaf ids fsadf asdf asidf asdfias difsidaf ids fsadfasdf asidf asdfias difsidaf ids fsadf"
+               />
+    <local:RowData xmlns:local="clr-namespace:PhoneApp1" 
+               MaCk="SSI" MaCkDisplay="SSI*" ThamChieu="7.6" Tran="7.9" San="7.3"
+               GiaKhop="7.9"
+               MuaGia3="7.7" MuaKL3="8,350"
+               MuaGia2="7.8" MuaKL2="10,281"
+               MuaGia1="7.9" MuaKL1="51,850"
+               BanGia3="7.3" BanKL3="8,350"
+               BanGia2="7.4" BanKL2="10,281"
+               BanGia1="7.5" BanKL1="51,850"
+               ThayDoi="3.9" KLGD="481,498"
+               TextColor="#FF33FF00"
+               TextColorMua3="White"
+               TextColorMua2="White"
+               TextColorMua1="White"
+               TextColorBan3="White"
+               TextColorBan2="White"
+               TextColorBan1="White"
+               TenCty="Dai"
                />
 </local:RowsData>

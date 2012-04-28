@@ -75,6 +75,7 @@
       <DependentUpon>Statistic.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converter\EvenOddColorConvert.cs" />
+    <Compile Include="Helper\StringHelper.cs" />
     <Compile Include="PageBrowser.xaml.cs">
       <DependentUpon>PageBrowser.xaml</DependentUpon>
     </Compile>
@@ -173,6 +174,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <Content Include="Images\appbar.edit.rest.png" />
+    <Content Include="Images\appbar.favs.rest.png" />
     <Content Include="Images\appbar.feature.settings.rest.png" />
     <Content Include="Images\appbar.refresh.rest.png" />
     <Content Include="ServiceReferences.ClientConfig" />

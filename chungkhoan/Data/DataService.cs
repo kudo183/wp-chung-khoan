@@ -16,9 +16,49 @@ namespace PhoneApp1
             get { return instance; }
         }
 
+
+        private readonly HoSTC_ServiceSoapClient _client = new HoSTC_ServiceSoapClient();
+
+        private volatile bool _isGettingData = false;
+        private string _totalMkt;
+        private string _liveSecurity;
+        private List<RowData> _rowsData;
+        private StatisticData _statisticData;
+        private List<int> _VN30List = new List<int>();
+        private string[] _hotList;
+        private Dictionary<string, string> _thongTinCty = new Dictionary<string, string>();
+
+        private Action<GetDataCompletedEventArgs> _getDataCompleteCallback;
+
+        public List<int> VN30List
+        {
+            get { return _VN30List; }
+        }
+
+        public StatisticData StatisticData
+        {
+            get { return _statisticData; }
+        }
+
+        public List<RowData> RowsData
+        {
+            get { return _rowsData; }
+        }
+
+        public string[] HotList
+        {
+            get { return _hotList; }
+            set { _hotList = value; }
+        }
+
+        public Dictionary<string, string> ThongTinCty
+        {
+            get { return _thongTinCty; }
+            set { _thongTinCty = value; }
+        }
+
         private DataService()
         {
-
             IsolatedStorageFile myStore = IsolatedStorageFile.GetUserStoreForApplication();
 
             using (var isoFileStream = new IsolatedStorageFileStream("hotlist.txt", FileMode.OpenOrCreate, myStore))
@@ -33,6 +73,17 @@ namespace PhoneApp1
             this._client.GetList30StockCompleted += new EventHandler<GetList30StockCompletedEventArgs>(_client_GetList30StockCompleted);
             this._client.GetLiveTotalMKTCompleted += new EventHandler<GetLiveTotalMKTCompletedEventArgs>(client_GetLiveTotalMKTCompleted);
             this._client.GetLiveSecurityCompleted += new EventHandler<GetLiveSecurityCompletedEventArgs>(client_GetLiveSecurityCompleted);
+            this._client.fGetSTOCKROOMCompleted += new EventHandler<fGetSTOCKROOMCompletedEventArgs>(_client_fGetSTOCKROOMCompleted);            
+        }
+
+        void _client_fGetSTOCKROOMCompleted(object sender, fGetSTOCKROOMCompletedEventArgs e)
+        {
+            string[] companies = e.Result.Split(new[] { "**" }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var company in companies)
+            {
+                string[] info = company.Split(new[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
+                ThongTinCty.Add(info[0], info[1]);
+            }
             this._client.GetList30StockAsync();
         }
 
@@ -44,21 +95,7 @@ namespace PhoneApp1
             {
                 this._VN30List.Add(int.Parse(temp[i]));
             }
-        }
-
-        void client_GetLiveSecurityCompleted(object sender, GetLiveSecurityCompletedEventArgs e)
-        {
-            if (e.Error != null)
-            {
-                this.OnGetDataComplete(false);
-                return;
-            }
-            this._liveSecurity = e.Result;
-            this.RowsData = RowData.GetRowData(this._liveSecurity);
-            this.StatisticData.CountTran = this.RowsData.Count(p => p.DGiaKhop == p.DTran);
-            this.StatisticData.CountSan = this.RowsData.Count(p => p.DGiaKhop == p.DSan);
-            this.StatisticData.CountThamChieu = this.RowsData.Count(p => p.DGiaKhop == p.DThamChieu);
-            this.OnGetDataComplete(true);
+            this._client.GetLiveTotalMKTAsync();
         }
 
         void client_GetLiveTotalMKTCompleted(object sender, GetLiveTotalMKTCompletedEventArgs e)
@@ -69,43 +106,28 @@ namespace PhoneApp1
                 return;
             }
             this._totalMkt = e.Result;
-            this.StatisticData = new StatisticData(this._totalMkt);
+            this._statisticData = new StatisticData(this._totalMkt);
             this._client.GetLiveSecurityAsync(true);
         }
 
-        private readonly HoSTC_ServiceSoapClient _client = new HoSTC_ServiceSoapClient();
-
-        private string _totalMkt;
-        private string _liveSecurity;
-        private List<RowData> _rowsData;
-        private StatisticData _statisticData;
-        private List<int> _VN30List = new List<int>();
-        private string[] _hotList;
-
-        public List<int> VN30List { get { return _VN30List; } }
-
-        public StatisticData StatisticData
+        void client_GetLiveSecurityCompleted(object sender, GetLiveSecurityCompletedEventArgs e)
         {
-            get { return _statisticData; }
-            set { _statisticData = value; }
+            if (e.Error != null)
+            {
+                this.OnGetDataComplete(false);
+                return;
+            }
+            this._liveSecurity = e.Result;
+            this._rowsData = RowData.GetRowData(this._liveSecurity);
+            this.StatisticData.CountTran = this.RowsData.Count(p => p.DGiaKhop == p.DTran);
+            this.StatisticData.CountSan = this.RowsData.Count(p => p.DGiaKhop == p.DSan);
+            this.StatisticData.CountThamChieu = this.RowsData.Count(p => p.DGiaKhop == p.DThamChieu);
+            this.OnGetDataComplete(true);
         }
-
-        public List<RowData> RowsData
-        {
-            get { return _rowsData; }
-            set { _rowsData = value; }
-        }
-
-        public string[] HotList
-        {
-            get { return _hotList; }
-            set { _hotList = value; }
-        }
-
-        private Action<GetDataCompletedEventArgs> _getDataCompleteCallback;
 
         protected void OnGetDataComplete(bool isSuccess)
         {
+            this._isGettingData = false;
             if (this._getDataCompleteCallback != null)
             {
                 this._getDataCompleteCallback(new GetDataCompletedEventArgs()
@@ -121,9 +143,20 @@ namespace PhoneApp1
 
         public void RefreshData(Action<GetDataCompletedEventArgs> callback)
         {
+            if (this._isGettingData == true)
+                return;
+
             this._getDataCompleteCallback = callback;
             this._totalMkt = string.Empty;
             this._liveSecurity = string.Empty;
+
+            this._isGettingData = true;
+
+            if(this._thongTinCty.Count==0)
+            {
+                this._client.fGetSTOCKROOMAsync();
+                return;
+            }
 
             this._client.GetLiveTotalMKTAsync();
         }
