@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="PhoneApp1.Row"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:System="clr-namespace:System;assembly=mscorlib" mc:Ignorable="d"
+            xmlns:Window="clr-namespace:System.Windows;assembly=System.Windows"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}" d:DesignWidth="766"
+             d:DataContext="{d:DesignData Source=../SampleData/RowDataSampleData.xaml}">
+
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="3"/>
+        </Style>        
+        <Window:GridLength x:Key="colWidth1" > 60 </Window:GridLength>
+    </UserControl.Resources>
+    
+    <Grid x:Name="LayoutRoot" Margin="0,0,0,10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="{Binding MaCkDisplay}" Foreground="{Binding TextColor}" FontWeight="Bold" FontSize="24" />
+            <TextBlock Grid.Row="1" Text="{Binding GiaKhop}" Foreground="{Binding TextColor}" FontWeight="Bold" FontSize="24" />
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{StaticResource colWidth1}"/>
+                    <ColumnDefinition Width="{StaticResource colWidth1}"/>
+                    <ColumnDefinition Width="{StaticResource colWidth1}"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding ThamChieu}" Foreground="Yellow"/>
+                <TextBlock Grid.Column="1" Text="{Binding Tran}" Foreground="#FF33FF00"/>
+                <TextBlock Grid.Column="2" Text="{Binding San}" Foreground="Red"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{StaticResource colWidth1}"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding ThayDoi}" Foreground="{Binding TextColor}" FontWeight="Bold" FontSize="24" />
+                <TextBlock Grid.Column="1" Text="{Binding KLGD}" Foreground="#FF33FF00" FontWeight="Bold" FontSize="24" />
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="2" Margin="15,0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="0" Foreground="{Binding TextColorMua3}" Text="{Binding MuaGia3}"/>
+            <TextBlock Grid.Column="1" Foreground="{Binding TextColorMua3}" Text="{Binding MuaKL3}"/>
+            <TextBlock Grid.Column="2" Foreground="{Binding TextColorMua2}" Text="{Binding MuaGia2}"/>
+            <TextBlock Grid.Column="3" Foreground="{Binding TextColorMua2}" Text="{Binding MuaKL2}"/>
+            <TextBlock Grid.Column="4" Foreground="{Binding TextColorMua1}" Text="{Binding MuaGia1}"/>
+            <TextBlock Grid.Column="5" Foreground="{Binding TextColorMua1}" Text="{Binding MuaKL1}"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Foreground="{Binding TextColorBan3}" Text="{Binding BanGia3}"/>
+            <TextBlock Grid.Row="1" Grid.Column="1" Foreground="{Binding TextColorBan3}" Text="{Binding BanKL3}"/>
+            <TextBlock Grid.Row="1" Grid.Column="2" Foreground="{Binding TextColorBan2}" Text="{Binding BanGia2}"/>
+            <TextBlock Grid.Row="1" Grid.Column="3" Foreground="{Binding TextColorBan2}" Text="{Binding BanKL2}"/>
+            <TextBlock Grid.Row="1" Grid.Column="4" Foreground="{Binding TextColorBan1}" Text="{Binding BanGia1}"/>
+            <TextBlock Grid.Row="1" Grid.Column="5" Foreground="{Binding TextColorBan1}" Text="{Binding BanKL1}"/>
+        </Grid>
+    </Grid>
+</UserControl>
