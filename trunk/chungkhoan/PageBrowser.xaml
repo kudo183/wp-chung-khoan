@@ -18,7 +18,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <my:Calculator />
+        <my:Calculator x:Name="calculator"/>
         <phone:WebBrowser x:Name="webBrowser1" IsScriptEnabled="True" Grid.Row="1"/>
     </Grid>
 </phone:PhoneApplicationPage>

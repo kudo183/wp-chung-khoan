@@ -6,10 +6,14 @@ namespace PhoneApp1
     {
         public static Color Color_MauTang = Color.FromArgb(0xff, 0x33, 0xFF, 0x00);
         public static Color Color_MauGiam = Colors.Red;
+        public static Color Color_MauTran = Color.FromArgb(0xff, 0xFF, 0x00, 0xFF);
+        public static Color Color_MauSan = Colors.Cyan;
         public static Color Color_MauThamChieu = Colors.Yellow;
 
         public static SolidColorBrush SolidColorBrush_MauTang = new SolidColorBrush(Constant.Color_MauTang);
         public static SolidColorBrush SolidColorBrush_MauGiam = new SolidColorBrush(Constant.Color_MauGiam);
+        public static SolidColorBrush SolidColorBrush_MauTran = new SolidColorBrush(Constant.Color_MauTran);
+        public static SolidColorBrush SolidColorBrush_MauSan = new SolidColorBrush(Constant.Color_MauSan);
         public static SolidColorBrush SolidColorBrush_MauThamChieu = new SolidColorBrush(Constant.Color_MauThamChieu);
 
         public const string String_DongCua = "ĐóngCửa";

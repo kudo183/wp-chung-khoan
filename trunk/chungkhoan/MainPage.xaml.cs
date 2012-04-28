@@ -1,16 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Tasks;
 using PhoneApp1.Data;
@@ -33,9 +26,9 @@ namespace PhoneApp1
             ThamChieu
         }
 
-        private static Mode _mode;
+        private static Mode _mode = Mode.Hot;
         private string _searchText;
-        private bool isFirstLoad = true;
+        private static bool isFirstLoad = true;
         DispatcherTimer timer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 1) };
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
@@ -45,7 +38,7 @@ namespace PhoneApp1
                 if (isFirstLoad == true)
                 {
                     isFirstLoad = false;
-                    RefreshData();
+                    this.RefreshData();
                 }
                 else
                 {
@@ -114,6 +107,13 @@ namespace PhoneApp1
                 Uri = new Uri(url, UriKind.Absolute)
             };
             webBrowserTask.Show();
+        }
+
+        private void appBtnACB_Click(object sender, EventArgs e)
+        {
+            string url = "https://www.acbonline.com.vn";
+            url = HttpUtility.UrlEncode(url);
+            NavigationService.Navigate(new Uri("/PageBrowser.xaml?cal=0&url=" + url, UriKind.Relative));
         }
 
         void timer_Tick(object sender, EventArgs e)

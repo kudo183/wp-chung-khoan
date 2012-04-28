@@ -53,6 +53,7 @@
             <shell:ApplicationBarIconButton x:Name="appBtnRefresh" IconUri="/Images/appbar.feature.settings.rest.png" Text="Hot list" Click="appBtnHotList_Click" />
             <shell:ApplicationBarIconButton x:Name="appBtnHotList" IconUri="/Images/appbar.refresh.rest.png" Text="Refresh" Click="appBtnRefresh_Click" />
             <shell:ApplicationBarIconButton x:Name="appBtnFile" IconUri="/Images/appbar.edit.rest.png" Text="File" Click="appBtnFile_Click" />
+            <shell:ApplicationBarIconButton x:Name="appBtnACB" IconUri="/Images/appbar.favs.rest.png" Text="ACB" Click="appBtnACB_Click"/>
             <!--<shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem Text="MenuItem 1"/>
                 <shell:ApplicationBarMenuItem Text="MenuItem 2"/>

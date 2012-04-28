@@ -1,17 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.IO.IsolatedStorage;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using System.Windows.Threading;
 using Microsoft.Phone.Controls;
 
 namespace PhoneApp1
@@ -26,6 +13,11 @@ namespace PhoneApp1
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+            if (this.NavigationContext.QueryString.ContainsKey("cal")==true)
+            {
+                int i = int.Parse(this.NavigationContext.QueryString["cal"]);
+                calculator.Visibility = (i == 0) ? System.Windows.Visibility.Collapsed : System.Windows.Visibility.Visible;
+            }
             webBrowser1.Source = new Uri(this.NavigationContext.QueryString["url"], UriKind.Absolute);
         }
     }
