@@ -99,7 +99,7 @@ namespace PhoneApp1
 
         private void appBtnFile_Click(object sender, EventArgs e)
         {
-            string url = "https://skydrive.live.com/MobileProtocol?ptcl=office%3a&dav=https%3a%2f%2fd.docs.live.net%2ff1b769de785994c7%2f%5e.Documents%2fck.xlsx";
+            string url = DataService.Instance.ExcelFileUrl;
             //url = HttpUtility.UrlEncode(url);
             //NavigationService.Navigate(new Uri("/PageBrowser.xaml?url=" + url, UriKind.Relative));
             var webBrowserTask = new WebBrowserTask

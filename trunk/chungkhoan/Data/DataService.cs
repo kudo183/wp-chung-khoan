@@ -16,7 +16,6 @@ namespace PhoneApp1
             get { return instance; }
         }
 
-
         private readonly HoSTC_ServiceSoapClient _client = new HoSTC_ServiceSoapClient();
 
         private volatile bool _isGettingData = false;
@@ -57,16 +56,27 @@ namespace PhoneApp1
             set { _thongTinCty = value; }
         }
 
+        public string ExcelFileUrl { get; set; }
+
         private DataService()
         {
             IsolatedStorageFile myStore = IsolatedStorageFile.GetUserStoreForApplication();
 
-            using (var isoFileStream = new IsolatedStorageFileStream("hotlist.txt", FileMode.OpenOrCreate, myStore))
+            using (var isoFileStream = new IsolatedStorageFileStream(Constant.HotListFile, FileMode.OpenOrCreate, myStore))
             {
                 //Write the data
                 using (var isoFileReader = new StreamReader(isoFileStream))
                 {
                     _hotList = isoFileReader.ReadToEnd().Split(new[] { "*" }, StringSplitOptions.RemoveEmptyEntries);
+                }
+            }
+
+            using (var isoFileStream = new IsolatedStorageFileStream(Constant.ExcelFileUrl, FileMode.OpenOrCreate, myStore))
+            {
+                //Write the data
+                using (var isoFileReader = new StreamReader(isoFileStream))
+                {
+                    ExcelFileUrl = isoFileReader.ReadToEnd();
                 }
             }
 
