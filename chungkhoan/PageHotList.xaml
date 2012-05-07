@@ -18,14 +18,25 @@
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Excel File Url:" VerticalAlignment="Center"/>
+            <TextBox x:Name="txtExcelFileUrl" Grid.Column="1"/>
+            <Button Grid.Column="2" x:Name="btnSave" Content="Save"/>
+        </Grid>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
             <TextBox x:Name="txtSearch" InputScope="Search" Width="500"/>
-            <Button x:Name="btnOk" Content="OK"/>
-            <Button x:Name="btnCancel" Content="Cancel"/>
+            <Button x:Name="btnOk" Content="Save"/>
+            <Button x:Name="btnCancel" Content="Close"/>
         </StackPanel>
-        <ListBox Grid.Row="1"  ItemsSource="{Binding}">
+        <ListBox Grid.Row="2"  ItemsSource="{Binding}">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>

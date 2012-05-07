@@ -23,12 +23,34 @@ namespace PhoneApp1
         public PageHotList()
         {
             InitializeComponent();
-            btnOk.Click += new RoutedEventHandler(btnOk_Click);
-            btnCancel.Click += new RoutedEventHandler(btnCancel_Click);
-            txtSearch.TextChanged += new TextChangedEventHandler(txtSearch_TextChanged); 
+            this.btnOk.Click += new RoutedEventHandler(btnOk_Click);
+            this.btnCancel.Click += new RoutedEventHandler(btnCancel_Click);
+            this.btnSave.Click += new RoutedEventHandler(btnSave_Click);
+            this.txtExcelFileUrl.GotFocus += new RoutedEventHandler(txtExcelFileUrl_GotFocus);
+            this.txtSearch.TextChanged += new TextChangedEventHandler(txtSearch_TextChanged);
             this.txtSearch.GotFocus += new RoutedEventHandler(txtSearch_GotFocus);
-            timer.Tick += new EventHandler(timer_Tick);
-            Loaded += new RoutedEventHandler(PageHotList_Loaded);
+            this.timer.Tick += new EventHandler(timer_Tick);
+            this.Loaded += new RoutedEventHandler(PageHotList_Loaded);
+        }
+
+        void txtExcelFileUrl_GotFocus(object sender, RoutedEventArgs e)
+        {
+            this.txtExcelFileUrl.Select(0, this.txtExcelFileUrl.Text.Length);
+        }
+
+        void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            IsolatedStorageFile myStore = IsolatedStorageFile.GetUserStoreForApplication();
+
+            using (var isoFileStream = new IsolatedStorageFileStream(Constant.ExcelFileUrl, FileMode.Create, myStore))
+            {
+                //Write the data
+                using (var isoFileWriter = new StreamWriter(isoFileStream))
+                {
+                    isoFileWriter.Write(this.txtExcelFileUrl.Text);
+                    DataService.Instance.ExcelFileUrl = this.txtExcelFileUrl.Text;
+                }
+            }
         }
 
         void timer_Tick(object sender, EventArgs e)
@@ -51,6 +73,7 @@ namespace PhoneApp1
         void PageHotList_Loaded(object sender, RoutedEventArgs e)
         {
             this.DataContext = DataService.Instance.RowsData;
+            this.txtExcelFileUrl.Text = DataService.Instance.ExcelFileUrl;
         }
 
         void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -63,7 +86,7 @@ namespace PhoneApp1
             //// Obtain the virtual store for the application.
             IsolatedStorageFile myStore = IsolatedStorageFile.GetUserStoreForApplication();
 
-            using (var isoFileStream = new IsolatedStorageFileStream("hotlist.txt", FileMode.Create, myStore))
+            using (var isoFileStream = new IsolatedStorageFileStream(Constant.HotListFile, FileMode.Create, myStore))
             {
                 //Write the data
                 using (var isoFileWriter = new StreamWriter(isoFileStream))
@@ -80,7 +103,7 @@ namespace PhoneApp1
                     DataService.Instance.HotList = hotlist.ToArray();
                 }
             }
-            this.NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+            //this.NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
         }
     }
 }

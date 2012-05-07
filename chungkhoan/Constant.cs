@@ -4,6 +4,9 @@ namespace PhoneApp1
 {
     public class Constant
     {
+        public const string HotListFile = "HotList.txt";
+        public const string ExcelFileUrl = "ExcelFileUrl.txt";
+
         public static Color Color_MauTang = Color.FromArgb(0xff, 0x33, 0xFF, 0x00);
         public static Color Color_MauGiam = Colors.Red;
         public static Color Color_MauTran = Color.FromArgb(0xff, 0xFF, 0x00, 0xFF);
