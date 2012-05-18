@@ -4,13 +4,8 @@ using System.Windows.Media;
 using System.Linq;
 using PhoneApp1.Helper;
 
-namespace PhoneApp1
+namespace PhoneApp1.Data
 {
-    public class RowsData : List<RowData>
-    {
-
-    }
-
     public class RowData
     {
         public bool IsSelected { get; set; }

@@ -30,6 +30,7 @@ namespace PhoneApp1
         private string _searchText;
         private static bool isFirstLoad = true;
         DispatcherTimer timer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 1) };
+        DispatcherTimer currentTimer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 1) };
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
@@ -68,6 +69,20 @@ namespace PhoneApp1
 
             securityTable.listBox.SelectionChanged += new SelectionChangedEventHandler(listBox_SelectionChanged);
             this.timer.Tick += new EventHandler(timer_Tick);
+            this.currentTimer.Tick += new EventHandler(currentTimer_Tick);
+            this.currentTimer.Start();
+
+            tbTime.Text = currentTime();
+        }
+
+        string currentTime()
+        {
+            return DateTime.Now.ToString("hh:mm");
+        }
+
+        void currentTimer_Tick(object sender, EventArgs e)
+        {
+            tbTime.Text = currentTime();
         }
 
         void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -99,7 +114,10 @@ namespace PhoneApp1
 
         private void appBtnFile_Click(object sender, EventArgs e)
         {
-            string url = DataService.Instance.ExcelFileUrl;
+            var url = DataService.Instance.ExcelFileUrl;
+            if (string.IsNullOrEmpty(url))
+                return;
+
             //url = HttpUtility.UrlEncode(url);
             //NavigationService.Navigate(new Uri("/PageBrowser.xaml?url=" + url, UriKind.Relative));
             var webBrowserTask = new WebBrowserTask
@@ -140,7 +158,7 @@ namespace PhoneApp1
         void UpdateUI()
         {
             this.statistic.DataContext = MainPage._statisticData;
-
+            
             this.btnAll.IsEnabled = true;
             this.btnTran.IsEnabled = true;
             this.btnSan.IsEnabled = true;
@@ -236,37 +254,39 @@ namespace PhoneApp1
 
         void btnThamChieu_Click(object sender, RoutedEventArgs e)
         {
-            MainPage._mode = Mode.ThamChieu;
-            UpdateUI();
+            switchMode(Mode.ThamChieu);
         }
 
         void btnAll_Click(object sender, RoutedEventArgs e)
         {
-            MainPage._mode = Mode.All;
-            UpdateUI();
+            switchMode(Mode.All);
         }
 
         void btnVN30_Click(object sender, RoutedEventArgs e)
         {
-            MainPage._mode = Mode.VN30;
-            UpdateUI();
+            switchMode(Mode.VN30);
         }
 
         void btnQuanTam_Click(object sender, RoutedEventArgs e)
         {
-            MainPage._mode = Mode.Hot;
-            UpdateUI();
+            switchMode(Mode.Hot);
         }
 
         void btnSan_Click(object sender, RoutedEventArgs e)
         {
-            MainPage._mode = Mode.San;
-            UpdateUI();
+            switchMode(Mode.San);
         }
 
         void btnTran_Click(object sender, RoutedEventArgs e)
         {
-            MainPage._mode = Mode.Tran;
+            switchMode(Mode.Tran);
+        }
+
+        void switchMode(Mode m)
+        {
+            txtSearch.Text = string.Empty;
+            _searchText = string.Empty;
+            MainPage._mode = m;
             UpdateUI();
         }
     }
