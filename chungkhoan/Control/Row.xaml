@@ -2,13 +2,12 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-            xmlns:System="clr-namespace:System;assembly=mscorlib" mc:Ignorable="d"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
             xmlns:Window="clr-namespace:System.Windows;assembly=System.Windows"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}" d:DesignWidth="766"
-             d:DataContext="{d:DesignData Source=../SampleData/RowDataSampleData.xaml}">
+             d:DataContext="{d:DesignData Source=../SampleData/SampleData.xaml}">
 
     <UserControl.Resources>
         <Style TargetType="TextBlock">
@@ -16,8 +15,8 @@
         </Style>        
         <Window:GridLength x:Key="colWidth1" > 60 </Window:GridLength>
     </UserControl.Resources>
-    
-    <Grid x:Name="LayoutRoot" Margin="0,0,0,10">
+
+    <Grid d:DataContext="{Binding SecurityTableData[0]}" Margin="0,0,0,10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="80"/>
             <ColumnDefinition Width="Auto"/>

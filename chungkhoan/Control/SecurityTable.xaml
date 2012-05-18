@@ -9,13 +9,13 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}" d:DesignWidth="800"
-              d:DataContext="{d:DesignData Source=../SampleData/RowDataSampleCollectionData.xaml}">
+              d:DataContext="{d:DesignData Source=../SampleData/SampleData.xaml}">
 
     <UserControl.Resources>
         <Converter:EvenOddColorConvert x:Key="evenOddColorConvert"/>
     </UserControl.Resources>
 
-    <Grid x:Name="LayoutRoot">
+    <Grid d:DataContext="{Binding SecurityTableData}">
         <ListBox ItemsSource="{Binding}" x:Name="listBox" SelectedValuePath="MaCk">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">

@@ -10,7 +10,8 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="PortraitOrLandscape" Orientation="LandscapeLeft"
-    shell:SystemTray.IsVisible="False">
+    shell:SystemTray.IsVisible="False"
+        d:DataContext="{d:DesignData Source=./SampleData/SampleData.xaml}">
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
         <Grid Width="720">
             <Grid.RowDefinitions>
@@ -22,12 +23,10 @@
             <Controls:PerformanceProgressBar x:Name="progressBar" Width="500" Height="10" Visibility="Collapsed"/>
 
             <StackPanel Grid.Row="1" Orientation="Horizontal" x:Name="spButtons">
-                <Button x:Name="btnAll" Content="All"/>
-                <Button x:Name="btnTran" Content="Tran"/>
-                <Button x:Name="btnSan" Content="San"/>
-                <Button x:Name="btnThamChieu" Content="TC"/>
-                <Button x:Name="btnVN30" Content="VN30"/>
+                <TextBlock x:Name="tbTime" Text="03:05" VerticalAlignment="Center" Width="55" Margin="3,0,0,0"/>
                 <Button x:Name="btnHot" Content="Hot"/>
+                <Button x:Name="btnVN30" Content="VN30"/>
+                <Button x:Name="btnAll" Content="All"/>
                 <TextBox x:Name="txtSearch" Width="90" TabIndex="-1">
                     <TextBox.InputScope>
                         <InputScope>
@@ -35,14 +34,17 @@
                         </InputScope>
                     </TextBox.InputScope>
                 </TextBox>
+                <Button x:Name="btnTran" Content="Tran"/>
+                <Button x:Name="btnSan" Content="San"/>
+                <Button x:Name="btnThamChieu" Content="TC"/>
             </StackPanel>
-            <Control:SecurityTable Grid.Row="2" x:Name="securityTable"/>
+            <Control:SecurityTable Grid.Row="2" x:Name="securityTable" d:DataContext="{Binding SecurityTableData}"/>
             <Grid Grid.Row="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Control:Statistic Grid.Column="0" x:Name="statistic"/>
+                <Control:Statistic Grid.Column="0" x:Name="statistic" d:DataContext="{Binding StatisticData}"/>
                 <TextBlock x:Name="tbCount" Grid.Column="1" Margin="3"/>
             </Grid>
         </Grid>

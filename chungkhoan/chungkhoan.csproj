@@ -75,6 +75,7 @@
       <DependentUpon>Statistic.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converter\EvenOddColorConvert.cs" />
+    <Compile Include="Data\SampleData.cs" />
     <Compile Include="Helper\StringHelper.cs" />
     <Compile Include="PageBrowser.xaml.cs">
       <DependentUpon>PageBrowser.xaml</DependentUpon>
@@ -95,9 +96,6 @@
       <DependentUpon>Row.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\RowData.cs" />
-    <DesignData Include="SampleData\RowDataSampleData.xaml">
-      <SubType>Designer</SubType>
-    </DesignData>
     <Compile Include="Service References\HoSTC_Service\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -137,16 +135,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <DesignData Include="SampleData\RowDataSampleCollectionData.xaml">
-      <SubType>Designer</SubType>
-    </DesignData>
-    <DesignData Include="SampleData\StatisticSampleData.xaml">
-      <SubType>Designer</SubType>
-    </DesignData>
     <Page Include="PageHotList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <DesignData Include="SampleData\SampleData.xaml">
+      <SubType>Designer</SubType>
+    </DesignData>
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AppManifest.xml" />

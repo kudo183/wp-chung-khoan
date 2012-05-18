@@ -132,6 +132,8 @@ namespace PhoneApp1
             this.StatisticData.CountTran = this.RowsData.Count(p => p.DGiaKhop == p.DTran);
             this.StatisticData.CountSan = this.RowsData.Count(p => p.DGiaKhop == p.DSan);
             this.StatisticData.CountThamChieu = this.RowsData.Count(p => p.DGiaKhop == p.DThamChieu);
+            this.StatisticData.CountTang = this.RowsData.Count(p => p.DGiaKhop > p.DThamChieu);
+            this.StatisticData.CountGiam = this.RowsData.Count(p => p.DGiaKhop < p.DThamChieu);
             this.OnGetDataComplete(true);
         }
 

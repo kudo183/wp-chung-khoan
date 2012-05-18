@@ -1,6 +1,6 @@
-﻿<local:RowsData  xmlns:local="clr-namespace:PhoneApp1">
-    <local:RowData xmlns:local="clr-namespace:PhoneApp1" 
-               MaCk="SAM" MaCkDisplay="SAM*" ThamChieu="7.6" Tran="7.9" San="7.3"
+﻿<local:SampleData xmlns:local="clr-namespace:PhoneApp1.Data">
+    <local:SampleData.SecurityTableData>
+        <local:RowData MaCk="SAM" MaCkDisplay="SAM*" ThamChieu="7.6" Tran="7.9" San="7.3"
                GiaKhop="7.9"
                MuaGia3="7.7" MuaKL3="8,350"
                MuaGia2="7.8" MuaKL2="10,281"
@@ -18,8 +18,7 @@
                TextColorBan1="White"
                TenCty="Dai"
                />
-    <local:RowData xmlns:local="clr-namespace:PhoneApp1" 
-               MaCk="SSI" MaCkDisplay="SSI*" ThamChieu="7.6" Tran="7.9" San="7.3"
+        <local:RowData MaCk="SSI" MaCkDisplay="SSI*" ThamChieu="7.6" Tran="7.9" San="7.3"
                GiaKhop="7.9"
                MuaGia3="7.7" MuaKL3="8,350"
                MuaGia2="7.8" MuaKL2="10,281"
@@ -37,8 +36,7 @@
                TextColorBan1="White"
                TenCty="Dai daidaiad fiasdif asdf asidf asdfias difsidaf ids fsadf asdf asidf asdfias difsidaf ids fsadfasdf asidf asdfias difsidaf ids fsadf"
                />
-    <local:RowData xmlns:local="clr-namespace:PhoneApp1" 
-               MaCk="SSI" MaCkDisplay="SSI*" ThamChieu="7.6" Tran="7.9" San="7.3"
+        <local:RowData MaCk="TAC" MaCkDisplay="TAC*" ThamChieu="7.6" Tran="7.9" San="7.3"
                GiaKhop="7.9"
                MuaGia3="7.7" MuaKL3="8,350"
                MuaGia2="7.8" MuaKL2="10,281"
@@ -56,4 +54,10 @@
                TextColorBan1="White"
                TenCty="Dai"
                />
-</local:RowsData>
+        </local:SampleData.SecurityTableData>
+    <local:SampleData.StatisticData>
+        <local:StatisticData
+                       Time="9:15" Status="Mở cửa" VNIndex="461" VNIndexChange="1.46" GTKL="1,799.984" SoGD="55,148"
+                       Date="17/07/2012" CountTran="10"/>
+    </local:SampleData.StatisticData>
+</local:SampleData>    

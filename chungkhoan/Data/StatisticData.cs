@@ -1,13 +1,5 @@
 ﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 
 namespace PhoneApp1.Data
 {
@@ -23,8 +15,14 @@ namespace PhoneApp1.Data
         public int CountTran { get; set; }
         public int CountSan { get; set; }
         public int CountThamChieu { get; set; }
+        public int CountTang { get; set; }
+        public int CountGiam { get; set; }
         public SolidColorBrush TextColor { get; set; }
 
+        public StatisticData()
+        {
+            
+        }
         public StatisticData(string s)
         {
             var temp = s.Split(new string[] { "**" }, StringSplitOptions.RemoveEmptyEntries);
@@ -46,10 +44,10 @@ namespace PhoneApp1.Data
             SoGD = (double.Parse(data[Constant.Int_SoLuongGiaoDich])).ToString("N0");
 
             string[] t = data[Constant.Int_Ngay].Split(' ');
-            Date = t[0];
+            Date = t[0].Substring(0, 5);
             int[] time = ConvertToTime(t[1]);
 
-            Time = string.Format("{0:D2}:{1:D2}:{2:D2}", time[0], time[1], time[2]);
+            Time = string.Format("{0:D2}:{1:D2}", time[0], time[1]);
             Status = GetStatusFromTime(data[Constant.Int_Phien], t[1]);
         }
 
