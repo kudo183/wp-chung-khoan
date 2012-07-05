@@ -96,6 +96,7 @@
       <DependentUpon>Row.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\RowData.cs" />
+    <Compile Include="PumpingCollection.cs" />
     <Compile Include="Service References\HoSTC_Service\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
