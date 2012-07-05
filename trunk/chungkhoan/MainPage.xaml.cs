@@ -72,6 +72,7 @@ namespace PhoneApp1
             this.btnVN30.Click += btnVN30_Click;
             this.txtSearch.TextChanged += txtSearch_TextChanged;
             this.txtSearch.GotFocus += txtSearch_GotFocus;
+            this._renderCollection.PumpingFinished += _renderCollection_PumpingFinished;
 
             this.securityTable.listBox.SelectionChanged += listBox_SelectionChanged;
             this._timer.Tick += timer_Tick;
@@ -79,6 +80,11 @@ namespace PhoneApp1
             this._currentTimer.Start();
 
             this.securityTable.DataContext = this._renderCollection.RenderCollection;
+        }
+
+        void _renderCollection_PumpingFinished(object sender, EventArgs e)
+        {
+            Busy(false);
         }
 
         void currentTimer_Tick(object sender, EventArgs e)
@@ -141,17 +147,27 @@ namespace PhoneApp1
             NavigationService.Navigate(new Uri("/PageBrowser.xaml?cal=0&url=" + url, UriKind.Relative));
         }
 
+        void Busy(bool isBusy)
+        {
+            if (isBusy == true)
+            {
+                this.progressBar.Visibility = System.Windows.Visibility.Visible;
+                this.progressBar.IsIndeterminate = true;
+                return;
+            }
+
+            this.progressBar.IsIndeterminate = false;
+            this.progressBar.Visibility = System.Windows.Visibility.Collapsed;
+        }
+
         void RefreshData()
         {
-            this.progressBar.Visibility = System.Windows.Visibility.Visible;
-            this.progressBar.IsIndeterminate = true;
+            Busy(true);
             DataService.Instance.RefreshData((c) =>
             {
                 MainPage._rowsData = c.RowsData;
                 MainPage._statisticData = c.StatisticData;
 
-                this.progressBar.IsIndeterminate = false;
-                this.progressBar.Visibility = System.Windows.Visibility.Collapsed;
                 this.UpdateUI();
             });
         }
@@ -289,6 +305,7 @@ namespace PhoneApp1
 
         void switchMode(Mode m)
         {
+            Busy(true);
             this.txtSearch.Text = string.Empty;
             this._searchText = string.Empty;
             MainPage._mode = m;
