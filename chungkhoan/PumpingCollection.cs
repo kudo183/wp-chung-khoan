@@ -23,6 +23,7 @@ namespace PhoneApp1
             this._timerPumping.Tick += _timerRender_Tick;
         }
 
+        public event EventHandler PumpingFinished;
         public IEnumerable<T> RenderDatas
         {
             get { return _renderDatas; }
@@ -49,9 +50,18 @@ namespace PhoneApp1
                 return;
 
             if (this.RenderCollection.Count == Count)
+            {
+                OnPumpingFinished();
                 return;
+            }
 
             this.RenderCollection.Add(this._renderDatas.ElementAt(this.RenderCollection.Count));
+        }
+
+        void OnPumpingFinished()
+        {
+            if (PumpingFinished != null)
+                PumpingFinished(this, null);
         }
 
         public void Stop()

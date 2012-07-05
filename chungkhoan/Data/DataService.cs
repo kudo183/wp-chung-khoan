@@ -23,7 +23,7 @@ namespace PhoneApp1
         private string _liveSecurity;
         private List<RowData> _rowsData;
         private StatisticData _statisticData;
-        private List<int> _VN30List = new List<int>();
+        private readonly List<int> _VN30List = new List<int>();
         private string[] _hotList;
         private Dictionary<string, string> _thongTinCty = new Dictionary<string, string>();
 
@@ -60,11 +60,10 @@ namespace PhoneApp1
 
         private DataService()
         {
-            IsolatedStorageFile myStore = IsolatedStorageFile.GetUserStoreForApplication();
+            var myStore = IsolatedStorageFile.GetUserStoreForApplication();
 
             using (var isoFileStream = new IsolatedStorageFileStream(Constant.HotListFile, FileMode.OpenOrCreate, myStore))
             {
-                //Write the data
                 using (var isoFileReader = new StreamReader(isoFileStream))
                 {
                     _hotList = isoFileReader.ReadToEnd().Split(new[] { "*" }, StringSplitOptions.RemoveEmptyEntries);
@@ -73,17 +72,16 @@ namespace PhoneApp1
 
             using (var isoFileStream = new IsolatedStorageFileStream(Constant.ExcelFileUrl, FileMode.OpenOrCreate, myStore))
             {
-                //Write the data
                 using (var isoFileReader = new StreamReader(isoFileStream))
                 {
                     ExcelFileUrl = isoFileReader.ReadToEnd();
                 }
             }
 
-            this._client.GetList30StockCompleted += new EventHandler<GetList30StockCompletedEventArgs>(_client_GetList30StockCompleted);
-            this._client.GetLiveTotalMKTCompleted += new EventHandler<GetLiveTotalMKTCompletedEventArgs>(client_GetLiveTotalMKTCompleted);
-            this._client.GetLiveSecurityCompleted += new EventHandler<GetLiveSecurityCompletedEventArgs>(client_GetLiveSecurityCompleted);
-            this._client.fGetSTOCKROOMCompleted += new EventHandler<fGetSTOCKROOMCompletedEventArgs>(_client_fGetSTOCKROOMCompleted);            
+            this._client.GetList30StockCompleted += _client_GetList30StockCompleted;
+            this._client.GetLiveTotalMKTCompleted += client_GetLiveTotalMKTCompleted;
+            this._client.GetLiveSecurityCompleted += client_GetLiveSecurityCompleted;
+            this._client.fGetSTOCKROOMCompleted += _client_fGetSTOCKROOMCompleted;            
         }
 
         void _client_fGetSTOCKROOMCompleted(object sender, fGetSTOCKROOMCompletedEventArgs e)
