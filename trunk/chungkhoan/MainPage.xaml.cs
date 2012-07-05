@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Windows;
@@ -22,23 +23,27 @@ namespace PhoneApp1
             Tran,
             San,
             Hot,
-            VN30,
+            Vn30,
             ThamChieu
         }
 
         private static Mode _mode = Mode.Hot;
+        private static bool _isFirstLoad = true;
+
+        private readonly DispatcherTimer _timer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 1) };
+        private readonly DispatcherTimer _currentTimer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 1) };
+
+        private readonly PumpingCollection<RowData> _renderCollection = new PumpingCollection<RowData>();
+
         private string _searchText;
-        private static bool isFirstLoad = true;
-        DispatcherTimer timer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 1) };
-        DispatcherTimer currentTimer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 1) };
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             try
             {
-                if (isFirstLoad == true)
+                if (_isFirstLoad == true)
                 {
-                    isFirstLoad = false;
+                    _isFirstLoad = false;
                     this.RefreshData();
                 }
                 else
@@ -54,35 +59,37 @@ namespace PhoneApp1
 
             base.OnNavigatedTo(e);
         }
+
         // Constructor
         public MainPage()
         {
             this.InitializeComponent();
-            this.btnAll.Click += new RoutedEventHandler(btnAll_Click);
+            this.btnAll.Click += btnAll_Click;
             this.btnTran.Click += btnTran_Click;
             this.btnSan.Click += btnSan_Click;
-            this.btnThamChieu.Click += new RoutedEventHandler(btnThamChieu_Click);
+            this.btnThamChieu.Click += btnThamChieu_Click;
             this.btnHot.Click += btnQuanTam_Click;
             this.btnVN30.Click += btnVN30_Click;
             this.txtSearch.TextChanged += txtSearch_TextChanged;
-            this.txtSearch.GotFocus += new RoutedEventHandler(txtSearch_GotFocus);
+            this.txtSearch.GotFocus += txtSearch_GotFocus;
 
-            securityTable.listBox.SelectionChanged += new SelectionChangedEventHandler(listBox_SelectionChanged);
-            this.timer.Tick += new EventHandler(timer_Tick);
-            this.currentTimer.Tick += new EventHandler(currentTimer_Tick);
-            this.currentTimer.Start();
+            this.securityTable.listBox.SelectionChanged += listBox_SelectionChanged;
+            this._timer.Tick += timer_Tick;
+            this._currentTimer.Tick += currentTimer_Tick;
+            this._currentTimer.Start();
 
-            tbTime.Text = currentTime();
-        }
-
-        string currentTime()
-        {
-            return DateTime.Now.ToString("hh:mm");
+            this.securityTable.DataContext = this._renderCollection.RenderCollection;
         }
 
         void currentTimer_Tick(object sender, EventArgs e)
         {
-            tbTime.Text = currentTime();
+            tbTime.Text = DateTime.Now.ToString("hh:mm");
+        }
+
+        void timer_Tick(object sender, EventArgs e)
+        {
+            this._timer.Stop();
+            this.UpdateUI();
         }
 
         void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -134,12 +141,6 @@ namespace PhoneApp1
             NavigationService.Navigate(new Uri("/PageBrowser.xaml?cal=0&url=" + url, UriKind.Relative));
         }
 
-        void timer_Tick(object sender, EventArgs e)
-        {
-            this.timer.Stop();
-            this.UpdateUI();
-        }
-
         void RefreshData()
         {
             this.progressBar.Visibility = System.Windows.Visibility.Visible;
@@ -158,7 +159,7 @@ namespace PhoneApp1
         void UpdateUI()
         {
             this.statistic.DataContext = MainPage._statisticData;
-            
+
             this.btnAll.IsEnabled = true;
             this.btnTran.IsEnabled = true;
             this.btnSan.IsEnabled = true;
@@ -166,128 +167,132 @@ namespace PhoneApp1
             this.btnThamChieu.IsEnabled = true;
             this.btnVN30.IsEnabled = true;
 
-            IEnumerable<RowData> rowDatas = null;
+            IEnumerable<RowData> renderDatas = null;
+
             switch (_mode)
             {
                 case Mode.All:
                     if (string.IsNullOrEmpty(this._searchText) == false)
                     {
-                        rowDatas = MainPage._rowsData.Where(p => p.MaCk == this._searchText);
+                        renderDatas = MainPage._rowsData.Where(p => p.MaCk == this._searchText);
                     }
                     else
                     {
-                        rowDatas = MainPage._rowsData;
+                        renderDatas = MainPage._rowsData;
                     }
-                    btnAll.IsEnabled = false;
+                    this.btnAll.IsEnabled = false;
                     break;
                 case Mode.Hot:
                     if (string.IsNullOrEmpty(this._searchText) == false)
                     {
-                        rowDatas = MainPage._rowsData.Where(p => DataService.Instance.HotList.Contains(p.MaCk) && p.MaCk == this._searchText);
+                        renderDatas = MainPage._rowsData.Where(p => DataService.Instance.HotList.Contains(p.MaCk) && p.MaCk == this._searchText);
                     }
                     else
                     {
-                        rowDatas = MainPage._rowsData.Where(p => DataService.Instance.HotList.Contains(p.MaCk));
+                        renderDatas = MainPage._rowsData.Where(p => DataService.Instance.HotList.Contains(p.MaCk));
                     }
-                    btnHot.IsEnabled = false;
+                    this.btnHot.IsEnabled = false;
                     break;
                 case Mode.Tran:
                     if (string.IsNullOrEmpty(this._searchText) == false)
                     {
-                        rowDatas = MainPage._rowsData.Where(p => p.DGiaKhop == p.DTran && p.MaCk == this._searchText);
+                        renderDatas = MainPage._rowsData.Where(p => p.DGiaKhop == p.DTran && p.MaCk == this._searchText);
                     }
                     else
                     {
-                        rowDatas = MainPage._rowsData.Where(p => p.DGiaKhop == p.DTran);
+                        renderDatas = MainPage._rowsData.Where(p => p.DGiaKhop == p.DTran);
                     }
-                    btnTran.IsEnabled = false;
+                    this.btnTran.IsEnabled = false;
                     break;
                 case Mode.ThamChieu:
                     if (string.IsNullOrEmpty(this._searchText) == false)
                     {
-                        rowDatas = MainPage._rowsData.Where(p => p.DGiaKhop == p.DThamChieu && p.MaCk == this._searchText);
+                        renderDatas = MainPage._rowsData.Where(p => p.DGiaKhop == p.DThamChieu && p.MaCk == this._searchText);
                     }
                     else
                     {
-                        rowDatas = MainPage._rowsData.Where(p => p.DGiaKhop == p.DThamChieu);
+                        renderDatas = MainPage._rowsData.Where(p => p.DGiaKhop == p.DThamChieu);
                     }
-                    btnThamChieu.IsEnabled = false;
+                    this.btnThamChieu.IsEnabled = false;
                     break;
                 case Mode.San:
                     if (string.IsNullOrEmpty(this._searchText) == false)
                     {
-                        rowDatas = MainPage._rowsData.Where(p => p.DGiaKhop == p.DSan && p.MaCk == this._searchText);
+                        renderDatas = MainPage._rowsData.Where(p => p.DGiaKhop == p.DSan && p.MaCk == this._searchText);
                     }
                     else
                     {
-                        rowDatas = MainPage._rowsData.Where(p => p.DGiaKhop == p.DSan);
+                        renderDatas = MainPage._rowsData.Where(p => p.DGiaKhop == p.DSan);
                     }
-                    btnSan.IsEnabled = false;
+                    this.btnSan.IsEnabled = false;
                     break;
-                case Mode.VN30:
+                case Mode.Vn30:
                     if (string.IsNullOrEmpty(this._searchText) == false)
                     {
-                        rowDatas = MainPage._rowsData.Where(p => DataService.Instance.VN30List.Contains(p.Index) && p.MaCk == this._searchText);
+                        renderDatas = MainPage._rowsData.Where(p => DataService.Instance.VN30List.Contains(p.Index) && p.MaCk == this._searchText);
                     }
                     else
                     {
-                        rowDatas = MainPage._rowsData.Where(p => DataService.Instance.VN30List.Contains(p.Index));
+                        renderDatas = MainPage._rowsData.Where(p => DataService.Instance.VN30List.Contains(p.Index));
                     }
-                    btnVN30.IsEnabled = false;
+                    this.btnVN30.IsEnabled = false;
                     break;
             }
 
-            int count = rowDatas.Count();
-            for (int i = 0; i < count; i++)
-                rowDatas.ElementAt(i).Num = i;
+            if (renderDatas == null)
+                return;
 
-            tbCount.Text = count.ToString();
-            securityTable.DataContext = rowDatas;
-            securityTable.UpdateLayout();
+            var count = renderDatas.Count();
+            for (var i = 0; i < count; i++)
+                renderDatas.ElementAt(i).Num = i;
+
+            this.tbCount.Text = count.ToString();
+
+            this._renderCollection.RenderDatas = renderDatas;
         }
 
         void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
-            _searchText = txtSearch.Text.ToUpper();
-            timer.Start();
+            this._searchText = txtSearch.Text.ToUpper();
+            this._timer.Start();
         }
 
         void btnThamChieu_Click(object sender, RoutedEventArgs e)
         {
-            switchMode(Mode.ThamChieu);
+            this.switchMode(Mode.ThamChieu);
         }
 
         void btnAll_Click(object sender, RoutedEventArgs e)
         {
-            switchMode(Mode.All);
+            this.switchMode(Mode.All);
         }
 
         void btnVN30_Click(object sender, RoutedEventArgs e)
         {
-            switchMode(Mode.VN30);
+            this.switchMode(Mode.Vn30);
         }
 
         void btnQuanTam_Click(object sender, RoutedEventArgs e)
         {
-            switchMode(Mode.Hot);
+            this.switchMode(Mode.Hot);
         }
 
         void btnSan_Click(object sender, RoutedEventArgs e)
         {
-            switchMode(Mode.San);
+            this.switchMode(Mode.San);
         }
 
         void btnTran_Click(object sender, RoutedEventArgs e)
         {
-            switchMode(Mode.Tran);
+            this.switchMode(Mode.Tran);
         }
 
         void switchMode(Mode m)
         {
-            txtSearch.Text = string.Empty;
-            _searchText = string.Empty;
+            this.txtSearch.Text = string.Empty;
+            this._searchText = string.Empty;
             MainPage._mode = m;
-            UpdateUI();
+            this.UpdateUI();
         }
     }
 }
