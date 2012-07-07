@@ -29,13 +29,13 @@ namespace PhoneApp1
             get { return _renderDatas; }
             set
             {
-                _isSettingRenderData = true;
                 this._timerPumping.Stop();
+                _isSettingRenderData = true;
                 _renderDatas = value;
                 Count = _renderDatas.Count();
                 this.RenderCollection.Clear();
-                this._timerPumping.Start();
                 _isSettingRenderData = false;
+                this._timerPumping.Start();
             }
         }
 
@@ -51,6 +51,7 @@ namespace PhoneApp1
 
             if (this.RenderCollection.Count == Count)
             {
+                _timerPumping.Stop();
                 OnPumpingFinished();
                 return;
             }
