@@ -45,8 +45,6 @@ namespace PhoneApp1.Data
         public double DBanGia2 { get; set; }
         public double DBanGia3 { get; set; }
 
-        public string MaCkDisplay { get; set; }
-
         public SolidColorBrush TextColor { get; set; }
         public SolidColorBrush TextColorMua3 { get; set; }
         public SolidColorBrush TextColorMua2 { get; set; }
@@ -88,8 +86,6 @@ namespace PhoneApp1.Data
             DSan = StringHelper.ParseDouble(data[Constant.Int_San]);
             DGiaKhop = StringHelper.ParseDouble(data[Constant.Int_GiaKhop]);
             ThayDoi = Math.Round((DGiaKhop - DThamChieu) * 100 / DThamChieu, 1).ToString("N1");
-
-            MaCkDisplay = (DGiaKhop == DTran || DGiaKhop == DSan) ? "*" + MaCk : MaCk;
 
             TenCty = DataService.Instance.ThongTinCty[MaCk];
 
