@@ -20,7 +20,7 @@
                 <RowDefinition/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Controls:PerformanceProgressBar x:Name="progressBar" Width="500" Height="10" Visibility="Collapsed"/>
+            <Controls:PerformanceProgressBar x:Name="progressBar" Width="500" Height="5" Visibility="Visible"/>
 
             <StackPanel Grid.Row="1" Orientation="Horizontal" x:Name="spButtons">
                 <TextBlock x:Name="tbTime" Text="03:05" VerticalAlignment="Center" Width="55" Margin="3,0,0,0"/>

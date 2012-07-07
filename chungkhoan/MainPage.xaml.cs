@@ -151,13 +151,13 @@ namespace PhoneApp1
         {
             if (isBusy == true)
             {
-                this.progressBar.Visibility = System.Windows.Visibility.Visible;
+                tbTime.FontStyle = FontStyles.Italic;
                 this.progressBar.IsIndeterminate = true;
                 return;
             }
 
+            tbTime.FontStyle = FontStyles.Normal;
             this.progressBar.IsIndeterminate = false;
-            this.progressBar.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         void RefreshData()
