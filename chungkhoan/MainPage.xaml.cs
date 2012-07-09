@@ -14,9 +14,6 @@ namespace PhoneApp1
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        private static List<RowData> _rowsData;
-        private static StatisticData _statisticData;
-
         enum Mode
         {
             All,
@@ -163,18 +160,15 @@ namespace PhoneApp1
         void RefreshData()
         {
             Busy(true);
-            DataService.Instance.RefreshData((c) =>
+            DataService.Instance.RefreshData(() =>
             {
-                MainPage._rowsData = c.RowsData;
-                MainPage._statisticData = c.StatisticData;
-
                 this.UpdateUI();
             });
         }
 
         void UpdateUI()
         {
-            this.statistic.DataContext = MainPage._statisticData;
+            this.statistic.DataContext = DataService.Instance.StatisticData;
 
             this.btnAll.IsEnabled = true;
             this.btnTran.IsEnabled = true;
@@ -190,66 +184,66 @@ namespace PhoneApp1
                 case Mode.All:
                     if (string.IsNullOrEmpty(this._searchText) == false)
                     {
-                        renderDatas = MainPage._rowsData.Where(p => p.MaCk == this._searchText);
+                        renderDatas = DataService.Instance.RowsData.Where(p => p.MaCk == this._searchText);
                     }
                     else
                     {
-                        renderDatas = MainPage._rowsData;
+                        renderDatas = DataService.Instance.RowsData;
                     }
                     this.btnAll.IsEnabled = false;
                     break;
                 case Mode.Hot:
                     if (string.IsNullOrEmpty(this._searchText) == false)
                     {
-                        renderDatas = MainPage._rowsData.Where(p => DataService.Instance.HotList.Contains(p.MaCk) && p.MaCk == this._searchText);
+                        renderDatas = DataService.Instance.RowsData.Where(p => DataService.Instance.HotList.Contains(p.MaCk) && p.MaCk == this._searchText);
                     }
                     else
                     {
-                        renderDatas = MainPage._rowsData.Where(p => DataService.Instance.HotList.Contains(p.MaCk));
+                        renderDatas = DataService.Instance.RowsData.Where(p => DataService.Instance.HotList.Contains(p.MaCk));
                     }
                     this.btnHot.IsEnabled = false;
                     break;
                 case Mode.Tran:
                     if (string.IsNullOrEmpty(this._searchText) == false)
                     {
-                        renderDatas = MainPage._rowsData.Where(p => p.DGiaKhop == p.DTran && p.MaCk == this._searchText);
+                        renderDatas = DataService.Instance.RowsData.Where(p => p.DGiaKhop == p.DTran && p.MaCk == this._searchText);
                     }
                     else
                     {
-                        renderDatas = MainPage._rowsData.Where(p => p.DGiaKhop == p.DTran);
+                        renderDatas = DataService.Instance.RowsData.Where(p => p.DGiaKhop == p.DTran);
                     }
                     this.btnTran.IsEnabled = false;
                     break;
                 case Mode.ThamChieu:
                     if (string.IsNullOrEmpty(this._searchText) == false)
                     {
-                        renderDatas = MainPage._rowsData.Where(p => p.DGiaKhop == p.DThamChieu && p.MaCk == this._searchText);
+                        renderDatas = DataService.Instance.RowsData.Where(p => p.DGiaKhop == p.DThamChieu && p.MaCk == this._searchText);
                     }
                     else
                     {
-                        renderDatas = MainPage._rowsData.Where(p => p.DGiaKhop == p.DThamChieu);
+                        renderDatas = DataService.Instance.RowsData.Where(p => p.DGiaKhop == p.DThamChieu);
                     }
                     this.btnThamChieu.IsEnabled = false;
                     break;
                 case Mode.San:
                     if (string.IsNullOrEmpty(this._searchText) == false)
                     {
-                        renderDatas = MainPage._rowsData.Where(p => p.DGiaKhop == p.DSan && p.MaCk == this._searchText);
+                        renderDatas = DataService.Instance.RowsData.Where(p => p.DGiaKhop == p.DSan && p.MaCk == this._searchText);
                     }
                     else
                     {
-                        renderDatas = MainPage._rowsData.Where(p => p.DGiaKhop == p.DSan);
+                        renderDatas = DataService.Instance.RowsData.Where(p => p.DGiaKhop == p.DSan);
                     }
                     this.btnSan.IsEnabled = false;
                     break;
                 case Mode.Vn30:
                     if (string.IsNullOrEmpty(this._searchText) == false)
                     {
-                        renderDatas = MainPage._rowsData.Where(p => DataService.Instance.VN30List.Contains(p.Index) && p.MaCk == this._searchText);
+                        renderDatas = DataService.Instance.RowsData.Where(p => DataService.Instance.VN30List.Contains(p.Index) && p.MaCk == this._searchText);
                     }
                     else
                     {
-                        renderDatas = MainPage._rowsData.Where(p => DataService.Instance.VN30List.Contains(p.Index));
+                        renderDatas = DataService.Instance.RowsData.Where(p => DataService.Instance.VN30List.Contains(p.Index));
                     }
                     this.btnVN30.IsEnabled = false;
                     break;
