@@ -27,7 +27,7 @@ namespace PhoneApp1
         private string[] _hotList;
         private Dictionary<string, string> _thongTinCty = new Dictionary<string, string>();
 
-        private Action<GetDataCompletedEventArgs> _getDataCompleteCallback;
+        private Action _getDataCompleteCallback;
 
         public List<int> VN30List
         {
@@ -140,18 +140,11 @@ namespace PhoneApp1
             this._isGettingData = false;
             if (this._getDataCompleteCallback != null)
             {
-                this._getDataCompleteCallback(new GetDataCompletedEventArgs()
-                                                 {
-                                                     LiveSecurity = _liveSecurity,
-                                                     TotalMKT = _totalMkt,
-                                                     IsSuccess = isSuccess,
-                                                     RowsData = RowsData,
-                                                     StatisticData = StatisticData
-                                                 });
+                this._getDataCompleteCallback();
             }
         }
 
-        public void RefreshData(Action<GetDataCompletedEventArgs> callback)
+        public void RefreshData(Action callback)
         {
             if (this._isGettingData == true)
                 return;
@@ -169,15 +162,6 @@ namespace PhoneApp1
             }
 
             this._client.GetLiveTotalMKTAsync();
-        }
-
-        public class GetDataCompletedEventArgs : EventArgs
-        {
-            public string LiveSecurity { get; set; }
-            public string TotalMKT { get; set; }
-            public bool IsSuccess { get; set; }
-            public List<RowData> RowsData { get; set; }
-            public StatisticData StatisticData { get; set; }
         }
     }
 }
