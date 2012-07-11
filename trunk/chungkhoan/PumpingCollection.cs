@@ -46,6 +46,7 @@ namespace PhoneApp1
 
         void _timerRender_Tick(object sender, EventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine("Tick: {0} ms", StopWatch.TimeSpanFromPreviousCall().TotalMilliseconds);
             if (_isSettingRenderData == true)
                 return;
 

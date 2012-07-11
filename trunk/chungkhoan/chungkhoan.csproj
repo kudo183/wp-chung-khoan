@@ -48,6 +48,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.4.5.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Interop" />
@@ -59,6 +60,8 @@
     <Reference Include="System.Net" />
     <Reference Include="System.Xml" />
     <Reference Include="mscorlib.extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml.XPath, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -75,7 +78,11 @@
       <DependentUpon>Statistic.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converter\EvenOddColorConvert.cs" />
-    <Compile Include="Data\SampleData.cs" />
+    <Compile Include="DataService\DataService.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="DataService\HNXDataService.cs" />
+    <Compile Include="DataService\IDataService.cs" />
+    <Compile Include="DataEntity\SampleData.cs" />
     <Compile Include="Helper\StringHelper.cs" />
     <Compile Include="PageBrowser.xaml.cs">
       <DependentUpon>PageBrowser.xaml</DependentUpon>
@@ -83,8 +90,8 @@
     <Compile Include="PageCheckPass.xaml.cs">
       <DependentUpon>PageCheckPass.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data\DataService.cs" />
-    <Compile Include="Data\StatisticData.cs" />
+    <Compile Include="DataService\HOSEDataService.cs" />
+    <Compile Include="DataEntity\StatisticData.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -95,13 +102,14 @@
     <Compile Include="Control\Row.xaml.cs">
       <DependentUpon>Row.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data\RowData.cs" />
+    <Compile Include="DataEntity\RowData.cs" />
     <Compile Include="PumpingCollection.cs" />
     <Compile Include="Service References\HoSTC_Service\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Utils\IsolatedStorageHelper.cs" />
     <Compile Include="Utils\StopWatch.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -176,6 +184,8 @@
     <Content Include="Images\appbar.favs.rest.png" />
     <Content Include="Images\appbar.feature.settings.rest.png" />
     <Content Include="Images\appbar.refresh.rest.png" />
+    <Content Include="lib\HtmlAgilityPack.dll" />
+    <Content Include="lib\System.Xml.XPath.dll" />
     <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
