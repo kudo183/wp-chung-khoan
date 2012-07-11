@@ -2,7 +2,6 @@
 {
     public class StringHelper
     {
-
         public static string FormatDouble(string s)
         {
             return ParseDouble(s).ToString("N2");
@@ -10,7 +9,7 @@
 
         public static string FormatInt(string s)
         {
-            return ParseInt(s).ToString("N0");
+            return ((int)ParseDouble(s)).ToString("N0");
         }
 
         public static double ParseDouble(string s)
@@ -28,6 +27,5 @@
                 return d;
             return -1;
         }
-
     }
 }

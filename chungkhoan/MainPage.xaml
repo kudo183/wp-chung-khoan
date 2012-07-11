@@ -23,9 +23,12 @@
             <Controls:PerformanceProgressBar x:Name="progressBar" Width="500" Height="5" Visibility="Visible"/>
 
             <StackPanel Grid.Row="1" Orientation="Horizontal" x:Name="spButtons">
-                <TextBlock x:Name="tbTime" Text="03:05" VerticalAlignment="Center" Width="55" Margin="3,0,0,0"/>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock x:Name="tbTime" Text="03:05" Width="55" Margin="3,0,0,0"/>
+                    <TextBlock x:Name="tbSan" Text="HSX" FontWeight="Bold"/>
+                </StackPanel>
                 <Button x:Name="btnHot" Content="Hot"/>
-                <Button x:Name="btnVN30" Content="VN30"/>
+                <Button x:Name="btnVN30" Content="Top"/>
                 <Button x:Name="btnAll" Content="All"/>
                 <TextBox x:Name="txtSearch" Width="90" TabIndex="-1">
                     <TextBox.InputScope>

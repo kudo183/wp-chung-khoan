@@ -3,17 +3,21 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using Microsoft.Phone.Controls;
+using PhoneApp1.Data;
+using PhoneApp1.Utils;
 
 namespace PhoneApp1
 {
     public partial class PageHotList : PhoneApplicationPage
     {
-        DispatcherTimer timer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 1) };
+        readonly DispatcherTimer _timer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 1) };
         private string _searchText;
+        
         public PageHotList()
         {
             InitializeComponent();
@@ -23,7 +27,7 @@ namespace PhoneApp1
             this.txtExcelFileUrl.GotFocus += new RoutedEventHandler(txtExcelFileUrl_GotFocus);
             this.txtSearch.TextChanged += new TextChangedEventHandler(txtSearch_TextChanged);
             this.txtSearch.GotFocus += new RoutedEventHandler(txtSearch_GotFocus);
-            this.timer.Tick += new EventHandler(timer_Tick);
+            this._timer.Tick += new EventHandler(timer_Tick);
             this.Loaded += new RoutedEventHandler(PageHotList_Loaded);
         }
 
@@ -42,14 +46,14 @@ namespace PhoneApp1
                 using (var isoFileWriter = new StreamWriter(isoFileStream))
                 {
                     isoFileWriter.Write(this.txtExcelFileUrl.Text);
-                    DataService.Instance.ExcelFileUrl = this.txtExcelFileUrl.Text;
+                    Global.ExcelFileUrl = this.txtExcelFileUrl.Text;
                 }
             }
         }
 
         void timer_Tick(object sender, EventArgs e)
         {
-            this.timer.Stop();
+            this._timer.Stop();
             this.DataContext = DataService.Instance.RowsData.Where(p => p.MaCk.Contains(this._searchText));
         }
 
@@ -61,13 +65,13 @@ namespace PhoneApp1
         void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
             this._searchText = txtSearch.Text.ToUpper();
-            this.timer.Start();
+            this._timer.Start();
         }
 
         void PageHotList_Loaded(object sender, RoutedEventArgs e)
         {
             this.DataContext = DataService.Instance.RowsData;
-            this.txtExcelFileUrl.Text = DataService.Instance.ExcelFileUrl;
+            this.txtExcelFileUrl.Text = Global.ExcelFileUrl;
         }
 
         void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -77,27 +81,18 @@ namespace PhoneApp1
 
         void btnOk_Click(object sender, RoutedEventArgs e)
         {
-            //// Obtain the virtual store for the application.
-            IsolatedStorageFile myStore = IsolatedStorageFile.GetUserStoreForApplication();
+            var hotlist = new List<string>();
+            var content = new StringBuilder();
 
-            using (var isoFileStream = new IsolatedStorageFileStream(Constant.HotListFile, FileMode.Create, myStore))
+            foreach (var rowData in DataService.Instance.RowsData.Where(rowData => rowData.IsSelected == true))
             {
-                //Write the data
-                using (var isoFileWriter = new StreamWriter(isoFileStream))
-                {
-                    List<string> hotlist = new List<string>();
-                    foreach (var rowData in DataService.Instance.RowsData)
-                    {
-                        if (rowData.IsSelected == true)
-                        {
-                            isoFileWriter.Write(rowData.MaCk + "*");
-                            hotlist.Add(rowData.MaCk);
-                        }
-                    }
-                    DataService.Instance.HotList = hotlist.ToArray();
-                }
+                content.Append(rowData.MaCk + "*");
+                hotlist.Add(rowData.MaCk);
             }
-            //this.NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+
+            IsolatedStorageHelper.WriteFile(DataService.GetHotListFileName(), content.ToString());
+
+            DataService.Instance.HotList = hotlist.ToArray();
         }
     }
 }

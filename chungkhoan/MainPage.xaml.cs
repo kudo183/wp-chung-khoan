@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Windows;
@@ -9,6 +8,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Tasks;
 using PhoneApp1.Data;
 using System.Windows.Threading;
+using PhoneApp1.Utils;
 
 namespace PhoneApp1
 {
@@ -23,16 +23,6 @@ namespace PhoneApp1
             Vn30,
             ThamChieu
         }
-
-        private static Mode _mode = Mode.Hot;
-        private static bool _isFirstLoad = true;
-
-        private readonly DispatcherTimer _timer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 1) };
-        private readonly DispatcherTimer _currentTimer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 1) };
-
-        private readonly PumpingCollection<RowData> _renderCollection = new PumpingCollection<RowData>();
-
-        private string _searchText;
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
@@ -57,6 +47,18 @@ namespace PhoneApp1
             base.OnNavigatedTo(e);
         }
 
+        #region property
+        private static Mode _mode = Mode.Hot;
+        private static bool _isFirstLoad = true;
+
+        private readonly DispatcherTimer _timer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 1) };
+        private readonly DispatcherTimer _currentTimer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 1) };
+
+        private readonly PumpingCollection<RowData> _renderCollection = new PumpingCollection<RowData>();
+
+        private string _searchText;
+        #endregion
+
         // Constructor
         public MainPage()
         {
@@ -77,22 +79,13 @@ namespace PhoneApp1
             this._currentTimer.Start();
 
             this.securityTable.DataContext = this._renderCollection.RenderCollection;
+
+            Global.ExcelFileUrl = IsolatedStorageHelper.ReadFile(Constant.ExcelFileUrl);
         }
 
         void _renderCollection_PumpingFinished(object sender, EventArgs e)
         {
             Busy(false);
-        }
-
-        void currentTimer_Tick(object sender, EventArgs e)
-        {
-            tbTime.Text = DateTime.Now.ToString("hh:mm");
-        }
-
-        void timer_Tick(object sender, EventArgs e)
-        {
-            this._timer.Stop();
-            this.UpdateUI();
         }
 
         void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -106,11 +99,20 @@ namespace PhoneApp1
             NavigationService.Navigate(new Uri("/PageBrowser.xaml?url=" + url, UriKind.Relative));
         }
 
-        void txtSearch_GotFocus(object sender, RoutedEventArgs e)
+        #region timer
+        void currentTimer_Tick(object sender, EventArgs e)
         {
-            this.txtSearch.Select(0, this.txtSearch.Text.Length);
+            tbTime.Text = DateTime.Now.ToString("hh:mm");
         }
 
+        void timer_Tick(object sender, EventArgs e)
+        {
+            this._timer.Stop();
+            this.UpdateUI();
+        }
+        #endregion
+
+        #region application bar button
         void appBtnHotList_Click(object sender, EventArgs e)
         {
             MainPage._mode = Mode.Hot;
@@ -122,14 +124,12 @@ namespace PhoneApp1
             this.RefreshData();
         }
 
-        private void appBtnFile_Click(object sender, EventArgs e)
+        void appBtnFile_Click(object sender, EventArgs e)
         {
-            var url = DataService.Instance.ExcelFileUrl;
+            var url = Global.ExcelFileUrl;
             if (string.IsNullOrEmpty(url))
                 return;
 
-            //url = HttpUtility.UrlEncode(url);
-            //NavigationService.Navigate(new Uri("/PageBrowser.xaml?url=" + url, UriKind.Relative));
             var webBrowserTask = new WebBrowserTask
             {
                 Uri = new Uri(url, UriKind.Absolute)
@@ -137,11 +137,65 @@ namespace PhoneApp1
             webBrowserTask.Show();
         }
 
-        private void appBtnACB_Click(object sender, EventArgs e)
+        void appBtnACB_Click(object sender, EventArgs e)
         {
-            string url = "https://www.acbonline.com.vn";
-            url = HttpUtility.UrlEncode(url);
-            NavigationService.Navigate(new Uri("/PageBrowser.xaml?cal=0&url=" + url, UriKind.Relative));
+            DataService.Mode = DataService.Mode == DataService.DataSource.HSX ? DataService.DataSource.HNX : DataService.DataSource.HSX;
+            tbSan.Text = DataService.Mode.ToString();
+            this.RefreshData();
+        }
+        #endregion
+
+        #region menu
+        void txtSearch_GotFocus(object sender, RoutedEventArgs e)
+        {
+            this.txtSearch.Select(0, this.txtSearch.Text.Length);
+        }
+
+        void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            this._searchText = txtSearch.Text.ToUpper();
+            this._timer.Start();
+        }
+
+        void btnThamChieu_Click(object sender, RoutedEventArgs e)
+        {
+            this.switchMode(Mode.ThamChieu);
+        }
+
+        void btnAll_Click(object sender, RoutedEventArgs e)
+        {
+            this.switchMode(Mode.All);
+        }
+
+        void btnVN30_Click(object sender, RoutedEventArgs e)
+        {
+            this.switchMode(Mode.Vn30);
+        }
+
+        void btnQuanTam_Click(object sender, RoutedEventArgs e)
+        {
+            this.switchMode(Mode.Hot);
+        }
+
+        void btnSan_Click(object sender, RoutedEventArgs e)
+        {
+            this.switchMode(Mode.San);
+        }
+
+        void btnTran_Click(object sender, RoutedEventArgs e)
+        {
+            this.switchMode(Mode.Tran);
+        }
+        #endregion
+
+        #region method
+        void switchMode(Mode m)
+        {
+            Busy(true);
+            this.txtSearch.Text = string.Empty;
+            this._searchText = string.Empty;
+            MainPage._mode = m;
+            this.UpdateUI();
         }
 
         void Busy(bool isBusy)
@@ -195,11 +249,11 @@ namespace PhoneApp1
                 case Mode.Hot:
                     if (string.IsNullOrEmpty(this._searchText) == false)
                     {
-                        renderDatas = DataService.Instance.RowsData.Where(p => DataService.Instance.HotList.Contains(p.MaCk) && p.MaCk == this._searchText);
+                        renderDatas = DataService.Instance.RowsData.Where(p => DataService.Instance.IsInHotList(p.MaCk) && p.MaCk == this._searchText);
                     }
                     else
                     {
-                        renderDatas = DataService.Instance.RowsData.Where(p => DataService.Instance.HotList.Contains(p.MaCk));
+                        renderDatas = DataService.Instance.RowsData.Where(p => DataService.Instance.IsInHotList(p.MaCk));
                     }
                     this.btnHot.IsEnabled = false;
                     break;
@@ -239,11 +293,11 @@ namespace PhoneApp1
                 case Mode.Vn30:
                     if (string.IsNullOrEmpty(this._searchText) == false)
                     {
-                        renderDatas = DataService.Instance.RowsData.Where(p => DataService.Instance.VN30List.Contains(p.Index) && p.MaCk == this._searchText);
+                        renderDatas = DataService.Instance.RowsData.Where(p => DataService.Instance.IsInTopList(p.Index) && p.MaCk == this._searchText);
                     }
                     else
                     {
-                        renderDatas = DataService.Instance.RowsData.Where(p => DataService.Instance.VN30List.Contains(p.Index));
+                        renderDatas = DataService.Instance.RowsData.Where(p => DataService.Instance.IsInTopList(p.Index));
                     }
                     this.btnVN30.IsEnabled = false;
                     break;
@@ -260,50 +314,6 @@ namespace PhoneApp1
 
             this._renderCollection.RenderDatas = renderDatas;
         }
-
-        void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            this._searchText = txtSearch.Text.ToUpper();
-            this._timer.Start();
-        }
-
-        void btnThamChieu_Click(object sender, RoutedEventArgs e)
-        {
-            this.switchMode(Mode.ThamChieu);
-        }
-
-        void btnAll_Click(object sender, RoutedEventArgs e)
-        {
-            this.switchMode(Mode.All);
-        }
-
-        void btnVN30_Click(object sender, RoutedEventArgs e)
-        {
-            this.switchMode(Mode.Vn30);
-        }
-
-        void btnQuanTam_Click(object sender, RoutedEventArgs e)
-        {
-            this.switchMode(Mode.Hot);
-        }
-
-        void btnSan_Click(object sender, RoutedEventArgs e)
-        {
-            this.switchMode(Mode.San);
-        }
-
-        void btnTran_Click(object sender, RoutedEventArgs e)
-        {
-            this.switchMode(Mode.Tran);
-        }
-
-        void switchMode(Mode m)
-        {
-            Busy(true);
-            this.txtSearch.Text = string.Empty;
-            this._searchText = string.Empty;
-            MainPage._mode = m;
-            this.UpdateUI();
-        }
+        #endregion
     }
 }
