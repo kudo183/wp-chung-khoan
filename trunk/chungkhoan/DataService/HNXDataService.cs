@@ -112,7 +112,9 @@ namespace PhoneApp1.Data
 
         string FormatRowData(HtmlNode tr)
         {
-            this._thongTinCty.Add(tr.ChildNodes[0].ChildNodes[0].Id, "test");
+            var tenCty = tr.ChildNodes[0].ChildNodes[1].OuterHtml.Split(',')[9].Split('-')[1];
+            this._thongTinCty.Add(tr.ChildNodes[0].ChildNodes[0].Id, System.Net.HttpUtility.HtmlDecode(tenCty));
+
             var sb = new StringBuilder();
             sb.Append(tr.ChildNodes[0].ChildNodes[0].Id);
             sb.Append("|");
