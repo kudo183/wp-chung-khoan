@@ -16,8 +16,6 @@ namespace PhoneApp1
 
         private readonly DispatcherTimer _timerPumping = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 0, 0) };
 
-        private volatile bool _isSettingRenderData = false;
-
         public PumpingCollection()
         {
             this._timerPumping.Tick += _timerRender_Tick;
@@ -30,11 +28,11 @@ namespace PhoneApp1
             set
             {
                 this._timerPumping.Stop();
-                _isSettingRenderData = true;
+
                 _renderDatas = value;
                 Count = _renderDatas.Count();
                 this.RenderCollection.Clear();
-                _isSettingRenderData = false;
+
                 this._timerPumping.Start();
             }
         }
@@ -47,9 +45,7 @@ namespace PhoneApp1
         void _timerRender_Tick(object sender, EventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("Tick: {0} ms", StopWatch.TimeSpanFromPreviousCall().TotalMilliseconds);
-            if (_isSettingRenderData == true)
-                return;
-
+            
             if (this.RenderCollection.Count == Count)
             {
                 _timerPumping.Stop();

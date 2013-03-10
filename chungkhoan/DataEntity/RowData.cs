@@ -1,11 +1,249 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Media;
 using PhoneApp1.Helper;
 
 namespace PhoneApp1.Data
 {
-    public class RowData
+    public class RowData : INotifyPropertyChanged
     {
+        #region property notify change
+
+        private string _muaGia3;
+        public string MuaGia3
+        {
+            get { return _muaGia3; }
+            set
+            {
+                if (_muaGia3 == value)
+                    return;
+
+                _muaGia3 = value;
+                OnPropertyChanged("MuaGia3");
+            }
+        }
+
+        private string _muaKl3;
+        public string MuaKL3
+        {
+            get { return _muaKl3; }
+            set
+            {
+                if (_muaKl3 == value)
+                    return;
+
+                _muaKl3 = value;
+                OnPropertyChanged("MuaKL3");
+            }
+        }
+
+        private string _muaGia2;
+        public string MuaGia2
+        {
+            get { return _muaGia2; }
+            set
+            {
+                if (_muaGia2 == value)
+                    return;
+
+                _muaGia2 = value;
+                OnPropertyChanged("MuaGia2");
+            }
+        }
+
+        private string _muaKl2;
+        public string MuaKL2
+        {
+            get { return _muaKl2; }
+            set
+            {
+                if (_muaKl2 == value)
+                    return;
+
+                _muaKl2 = value;
+                OnPropertyChanged("MuaKL2");
+            }
+        }
+
+        private string _muaGia1;
+        public string MuaGia1
+        {
+            get { return _muaGia1; }
+            set
+            {
+                if (_muaGia1 == value)
+                    return;
+
+                _muaGia1 = value;
+                OnPropertyChanged("MuaGia1");
+            }
+        }
+
+        private string _muaKl1;
+        public string MuaKL1
+        {
+            get { return _muaKl1; }
+            set
+            {
+                if (_muaKl1 == value)
+                    return;
+
+                _muaKl1 = value;
+                OnPropertyChanged("MuaKL1");
+            }
+        }
+
+        private string _giaKhop;
+        public string GiaKhop
+        {
+            get { return _giaKhop; }
+            set
+            {
+                if (_giaKhop == value)
+                    return;
+
+                _giaKhop = value;
+                OnPropertyChanged("GiaKhop");
+            }
+        }
+
+        private string _thayDoi;
+        public string ThayDoi
+        {
+            get { return _thayDoi; }
+            set
+            {
+                if (_thayDoi == value)
+                    return;
+
+                _thayDoi = value;
+                OnPropertyChanged("ThayDoi");
+            }
+        }
+
+        private string _banGia3;
+        public string BanGia3
+        {
+            get { return _banGia3; }
+            set
+            {
+                if (_banGia3 == value)
+                    return;
+
+                _banGia3 = value;
+                OnPropertyChanged("BanGia3");
+            }
+        }
+
+        private string _banKl3;
+        public string BanKL3
+        {
+            get { return _banKl3; }
+            set
+            {
+                if (_banKl3 == value)
+                    return;
+
+                _banKl3 = value;
+                OnPropertyChanged("BanKL3");
+            }
+        }
+
+        private string _banGia2;
+        public string BanGia2
+        {
+            get { return _banGia2; }
+            set
+            {
+                if (_banGia2 == value)
+                    return;
+
+                _banGia2 = value;
+                OnPropertyChanged("BanGia2");
+            }
+        }
+
+        private string _banKl2;
+        public string BanKL2
+        {
+            get { return _banKl2; }
+            set
+            {
+                if (_banKl2 == value)
+                    return;
+
+                _banKl2 = value;
+                OnPropertyChanged("BanKL2");
+            }
+        }
+
+        private string _banGia1;
+        public string BanGia1
+        {
+            get { return _banGia1; }
+            set
+            {
+                if (_banGia1 == value)
+                    return;
+
+                _banGia1 = value;
+                OnPropertyChanged("BanGia1");
+            }
+        }
+
+        private string _banKl1;
+        public string BanKL1
+        {
+            get { return _banKl1; }
+            set
+            {
+                if (_banKl1 == value)
+                    return;
+
+                _banKl1 = value;
+                OnPropertyChanged("BanKL1");
+            }
+        }
+
+        private string _tklgd;
+        public string TKLGD
+        {
+            get { return _tklgd; }
+            set
+            {
+                if (_tklgd == value)
+                    return;
+
+                _tklgd = value;
+                OnPropertyChanged("TKLGD");
+            }
+        }
+
+        private string _klth;
+        public string KLTH
+        {
+            get { return _klth; }
+            set
+            {
+                if (_klth == value)
+                    return;
+
+                _klth = value;
+                OnPropertyChanged("KLTH");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+        #endregion
+
         #region property
         public bool IsSelected { get; set; }
         public int Index { get; set; }
@@ -15,21 +253,6 @@ namespace PhoneApp1.Data
         public string ThamChieu { get; set; }
         public string Tran { get; set; }
         public string San { get; set; }
-        public string MuaGia3 { get; set; }
-        public string MuaKL3 { get; set; }
-        public string MuaGia2 { get; set; }
-        public string MuaKL2 { get; set; }
-        public string MuaGia1 { get; set; }
-        public string MuaKL1 { get; set; }
-        public string GiaKhop { get; set; }
-        public string ThayDoi { get; set; }
-        public string BanGia3 { get; set; }
-        public string BanKL3 { get; set; }
-        public string BanGia2 { get; set; }
-        public string BanKL2 { get; set; }
-        public string BanGia1 { get; set; }
-        public string BanKL1 { get; set; }
-        public string KLGD { get; set; }
 
         public double DThamChieu { get; set; }
         public double DTran { get; set; }
@@ -81,13 +304,16 @@ namespace PhoneApp1.Data
             BanGia1 = data[Constant.Int_BanGia1];
             BanKL1 = StringHelper.FormatInt(data[Constant.Int_BanKL1]);
             GiaKhop = data[Constant.Int_GiaKhop];
-            KLGD = StringHelper.FormatInt(data[Constant.Int_KLGD]);
+
+            KLTH = StringHelper.FormatInt(data[Constant.Int_KLTH]);
+            TKLGD = StringHelper.FormatInt(data[Constant.Int_TKLGD]);
 
             DThamChieu = StringHelper.ParseDouble(data[Constant.Int_ThamChieu]);
             DTran = StringHelper.ParseDouble(data[Constant.Int_Tran]);
             DSan = StringHelper.ParseDouble(data[Constant.Int_San]);
             DGiaKhop = StringHelper.ParseDouble(data[Constant.Int_GiaKhop]);
-            ThayDoi = Math.Round((DGiaKhop - DThamChieu) * 100 / DThamChieu, 1).ToString("N1");
+
+            ThayDoi = (DGiaKhop == 0) ? "0" : Math.Round((DGiaKhop - DThamChieu) * 100 / DThamChieu, 1).ToString("N1");
 
             TenCty = DataService.Instance.ThongTinCty[MaCk];
 
