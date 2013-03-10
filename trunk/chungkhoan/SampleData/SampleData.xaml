@@ -8,7 +8,7 @@
                BanGia3="7.3" BanKL3="8,350"
                BanGia2="7.4" BanKL2="10,281"
                BanGia1="7.5" BanKL1="51,850"
-               ThayDoi="3.9" KLGD="481,498"
+               ThayDoi="3.9" KLTH="1,200" TKLGD="481,498"
                TextColor="#FF33FF00"
                TextColorMua3="Red"
                TextColorMua2="Green"
@@ -26,7 +26,7 @@
                BanGia3="7.3" BanKL3="8,350"
                BanGia2="7.4" BanKL2="10,281"
                BanGia1="7.5" BanKL1="51,850"
-               ThayDoi="3.9" KLGD="481,498"
+               ThayDoi="3.9" KLTH="1,200" TKLGD="481,498"
                TextColor="#FF33FF00"
                TextColorMua3="White"
                TextColorMua2="White"
@@ -44,7 +44,7 @@
                BanGia3="7.3" BanKL3="8,350"
                BanGia2="7.4" BanKL2="10,281"
                BanGia1="7.5" BanKL1="51,850"
-               ThayDoi="3.9" KLGD="481,498"
+               ThayDoi="3.9" KLTH="1,200" TKLGD="481,498"
                TextColor="#FF33FF00"
                TextColorMua3="White"
                TextColorMua2="White"
@@ -56,8 +56,8 @@
                />
         </local:SampleData.SecurityTableData>
     <local:SampleData.StatisticData>
-        <local:StatisticData
+        <local:StatisticData TextColor="White" GiaTriMotGD="1.234"
                        Time="9:15" Status="Mở cửa" VNIndex="461" VNIndexChange="1.46" GTKL="1,799.984" SoGD="55,148"
-                       Date="17/07/2012" CountTran="10"/>
+                       Date="17/07" CountTran="10"/>
     </local:SampleData.StatisticData>
 </local:SampleData>    

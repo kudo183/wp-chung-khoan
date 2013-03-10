@@ -45,6 +45,7 @@ namespace PhoneApp1
         public const int Int_BanGia1 = 14;
         public const int Int_BanKL1 = 15;
         public const int Int_GiaKhop = 16;
-        public const int Int_KLGD = 17;
+        public const int Int_TKLGD = 17;
+        public const int Int_KLTH = 18;
     }
 }

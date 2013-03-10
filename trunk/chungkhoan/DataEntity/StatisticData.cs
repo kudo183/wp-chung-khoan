@@ -13,6 +13,7 @@ namespace PhoneApp1.Data
         public string VNIndexChange { get; set; }
         public string GTKL { get; set; }
         public string SoGD { get; set; }
+        public string GiaTriMotGD { get; set; }
         public int CountTran { get; set; }
         public int CountSan { get; set; }
         public int CountThamChieu { get; set; }
@@ -41,6 +42,7 @@ namespace PhoneApp1.Data
             if (vnIndex == prevVnIndex)
                 TextColor = Constant.SolidColorBrush_MauThamChieu;
 
+            GiaTriMotGD = (double.Parse(data[Constant.Int_GiaTriKhopLenh]) / double.Parse(data[Constant.Int_SoLuongGiaoDich])).ToString("N3");
             GTKL = (double.Parse(data[Constant.Int_GiaTriKhopLenh])).ToString("N3");
             SoGD = (double.Parse(data[Constant.Int_SoLuongGiaoDich])).ToString("N0");
 

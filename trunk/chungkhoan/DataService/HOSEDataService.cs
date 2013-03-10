@@ -241,6 +241,8 @@ namespace PhoneApp1.Data
             sb.Append(temp[10]);
             sb.Append("|");
             sb.Append(temp[22]);
+            sb.Append("|");
+            sb.Append(temp[11]);
             return sb.ToString();
         }
 
@@ -249,7 +251,7 @@ namespace PhoneApp1.Data
             this._rowsData.Clear();
             this._statisticData = null;
         }
-        
+
         void SetRowData(string data)
         {
             var rows = data.Split(new[] { "**" }, StringSplitOptions.RemoveEmptyEntries);
@@ -266,7 +268,13 @@ namespace PhoneApp1.Data
         public void RefreshData(Action callback)
         {
             if (this._isGettingData == true)
+            {
+                if (callback != null)
+                {
+                    callback();
+                }
                 return;
+            }
 
             this._getDataCompleteCallback = callback;
             this.ClearData();

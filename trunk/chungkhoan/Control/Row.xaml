@@ -12,14 +12,14 @@
     <UserControl.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="Margin" Value="3"/>
-        </Style>        
-        <Window:GridLength x:Key="colWidth1" > 60 </Window:GridLength>
+        </Style>
+        <Window:GridLength x:Key="colWidth1" >65</Window:GridLength>
     </UserControl.Resources>
 
     <Grid d:DataContext="{Binding SecurityTableData[0]}" Margin="0,0,0,10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="80"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="220"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
@@ -41,20 +41,22 @@
                     <ColumnDefinition Width="{StaticResource colWidth1}"/>
                     <ColumnDefinition Width="{StaticResource colWidth1}"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="{Binding ThamChieu}" Foreground="Yellow"/>
-                <TextBlock Grid.Column="1" Text="{Binding Tran}" Foreground="#FF33FF00"/>
-                <TextBlock Grid.Column="2" Text="{Binding San}" Foreground="Red"/>
+                <TextBlock Grid.Column="0" FontWeight="Bold" Text="{Binding ThamChieu}" Foreground="Yellow"/>
+                <TextBlock Grid.Column="1" FontWeight="Bold" Text="{Binding Tran}" Foreground="#FFFF00FF"/>
+                <TextBlock Grid.Column="2" FontWeight="Bold" Text="{Binding San}" Foreground="Red"/>
             </Grid>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="{StaticResource colWidth1}"/>
+                    <ColumnDefinition Width="{StaticResource colWidth1}"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="{Binding ThayDoi}" Foreground="{Binding TextColor}" FontWeight="Bold" FontSize="24" />
-                <TextBlock Grid.Column="1" Text="{Binding KLGD}" Foreground="#FF33FF00" FontWeight="Bold" FontSize="24" />
+                <TextBlock Grid.Column="0" Text="{Binding ThayDoi}" Foreground="{Binding TextColor}" FontWeight="Bold" FontSize="24" VerticalAlignment="Center" />
+                <TextBlock Grid.Column="1" Text="{Binding KLTH}" Foreground="White" FontWeight="Bold" FontSize="20"/>
+                <TextBlock Grid.Column="2" Text="{Binding TKLGD}" Foreground="White" FontWeight="Bold" FontSize="20" />
             </Grid>
         </Grid>
-        <Grid Grid.Column="2" Margin="15,0,0,0">
+        <Grid Grid.Column="2" Margin="5,0,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>

@@ -5,6 +5,7 @@ using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using PhoneApp1.Data;
 using System.Windows.Threading;
@@ -56,10 +57,11 @@ namespace PhoneApp1
 
         private readonly PumpingCollection<RowData> _renderCollection = new PumpingCollection<RowData>();
 
+        private volatile bool _isBusy = false;
         private string _searchText;
         #endregion
 
-        // Constructor
+        #region Constructor
         public MainPage()
         {
             this.InitializeComponent();
@@ -82,6 +84,7 @@ namespace PhoneApp1
 
             Global.ExcelFileUrl = IsolatedStorageHelper.ReadFile(Constant.ExcelFileUrl);
         }
+        #endregion
 
         void _renderCollection_PumpingFinished(object sender, EventArgs e)
         {
@@ -121,7 +124,19 @@ namespace PhoneApp1
 
         void appBtnRefresh_Click(object sender, EventArgs e)
         {
-            this.RefreshData();
+            if (_isBusy == true)
+            {
+                return;
+            }
+
+            ((ApplicationBarIconButton)sender).IsEnabled = false;
+            Busy(true);
+            DataService.Instance.RefreshData(() =>
+            {
+                this.UpdateUI(true);
+                ((ApplicationBarIconButton)sender).IsEnabled = true;
+                Busy(false);
+            });
         }
 
         void appBtnFile_Click(object sender, EventArgs e)
@@ -200,6 +215,7 @@ namespace PhoneApp1
 
         void Busy(bool isBusy)
         {
+            _isBusy = isBusy;
             if (isBusy == true)
             {
                 tbTime.FontStyle = FontStyles.Italic;
@@ -213,6 +229,11 @@ namespace PhoneApp1
 
         void RefreshData()
         {
+            if (_isBusy == true)
+            {
+                return;
+            }
+
             Busy(true);
             DataService.Instance.RefreshData(() =>
             {
@@ -220,7 +241,7 @@ namespace PhoneApp1
             });
         }
 
-        void UpdateUI()
+        void UpdateUI(bool isRefresh = false)
         {
             this.statistic.DataContext = DataService.Instance.StatisticData;
 
@@ -249,7 +270,7 @@ namespace PhoneApp1
                 case Mode.Hot:
                     if (string.IsNullOrEmpty(this._searchText) == false)
                     {
-                        renderDatas = DataService.Instance.RowsData.Where(p => DataService.Instance.IsInHotList(p.MaCk) && p.MaCk == this._searchText);
+                        renderDatas = DataService.Instance.RowsData.Where(p => p.MaCk == this._searchText && DataService.Instance.IsInHotList(p.MaCk));
                     }
                     else
                     {
@@ -293,7 +314,7 @@ namespace PhoneApp1
                 case Mode.Vn30:
                     if (string.IsNullOrEmpty(this._searchText) == false)
                     {
-                        renderDatas = DataService.Instance.RowsData.Where(p => DataService.Instance.IsInTopList(p.Index) && p.MaCk == this._searchText);
+                        renderDatas = DataService.Instance.RowsData.Where(p => p.MaCk == this._searchText && DataService.Instance.IsInTopList(p.Index));
                     }
                     else
                     {
@@ -312,7 +333,35 @@ namespace PhoneApp1
 
             this.tbCount.Text = count.ToString();
 
-            this._renderCollection.RenderDatas = renderDatas;
+            if (isRefresh == false)
+            {
+                this._renderCollection.RenderDatas = renderDatas;
+            }
+            else
+            {
+                var dicData = renderDatas.ToDictionary(p => p.MaCk);
+
+                foreach (var rowData in this._renderCollection.RenderCollection)
+                {
+                    var row = dicData[rowData.MaCk];
+                    rowData.ThayDoi = row.ThayDoi;
+                    rowData.GiaKhop = row.GiaKhop;
+                    rowData.KLTH = row.KLTH;
+                    rowData.TKLGD = row.TKLGD;
+                    rowData.MuaGia1 = row.MuaGia1;
+                    rowData.MuaGia2 = row.MuaGia2;
+                    rowData.MuaGia3 = row.MuaGia3;
+                    rowData.MuaKL1 = row.MuaKL1;
+                    rowData.MuaKL2 = row.MuaKL2;
+                    rowData.MuaKL3 = row.MuaKL3;
+                    rowData.BanGia1 = row.BanGia1;
+                    rowData.BanGia2 = row.BanGia2;
+                    rowData.BanGia3 = row.BanGia3;
+                    rowData.BanKL1 = row.BanKL1;
+                    rowData.BanKL2 = row.BanKL2;
+                    rowData.BanKL3 = row.BanKL3;
+                }
+            }
         }
         #endregion
     }
