@@ -325,6 +325,11 @@ namespace PhoneApp1.Data
             DBanGia2 = StringHelper.ParseDouble(BanGia2);
             DBanGia3 = StringHelper.ParseDouble(BanGia3);
 
+            UpdateTextColor();
+        }
+
+        public void UpdateTextColor()
+        {
             TextColor = GetTextColor(DThamChieu, DGiaKhop, DTran, DSan);
             TextColorMua1 = GetTextColor(DThamChieu, DMuaGia1, DTran, DSan);
             TextColorMua2 = GetTextColor(DThamChieu, DMuaGia2, DTran, DSan);
