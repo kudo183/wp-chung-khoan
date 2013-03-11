@@ -360,6 +360,8 @@ namespace PhoneApp1
                     rowData.BanKL1 = row.BanKL1;
                     rowData.BanKL2 = row.BanKL2;
                     rowData.BanKL3 = row.BanKL3;
+
+                    row.UpdateTextColor();
                 }
             }
         }
