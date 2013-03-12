@@ -343,9 +343,9 @@ namespace PhoneApp1
 
                 foreach (var rowData in this._renderCollection.RenderCollection)
                 {
-                    var row = dicData[rowData.MaCk];
-                    rowData.ThayDoi = row.ThayDoi;
+                    var row = dicData[rowData.MaCk];                    
                     rowData.GiaKhop = row.GiaKhop;
+                    
                     rowData.KLTH = row.KLTH;
                     rowData.TKLGD = row.TKLGD;
                     rowData.MuaGia1 = row.MuaGia1;

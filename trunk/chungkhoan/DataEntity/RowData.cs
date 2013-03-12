@@ -233,6 +233,104 @@ namespace PhoneApp1.Data
             }
         }
 
+        private SolidColorBrush _textColor;
+        public SolidColorBrush TextColor
+        {
+            get { return _textColor; }
+            set
+            {
+                if (_textColor == value)
+                    return;
+                _textColor = value;
+
+                OnPropertyChanged("TextColor");
+            }
+        }
+
+        private SolidColorBrush _textColorMua3;
+        public SolidColorBrush TextColorMua3
+        {
+            get { return _textColorMua3; }
+            set
+            {
+                if (_textColorMua3 == value)
+                    return;
+                _textColorMua3 = value;
+
+                OnPropertyChanged("TextColorMua3");
+            }
+        }
+
+        private SolidColorBrush _textColorMua2;
+        public SolidColorBrush TextColorMua2
+        {
+            get { return _textColorMua2; }
+            set
+            {
+                if (_textColorMua2 == value)
+                    return;
+                _textColorMua2 = value;
+
+                OnPropertyChanged("TextColorMua2");
+            }
+        }
+
+        private SolidColorBrush _textColorMua1;
+        public SolidColorBrush TextColorMua1
+        {
+            get { return _textColorMua1; }
+            set
+            {
+                if (_textColorMua1 == value)
+                    return;
+                _textColorMua1 = value;
+
+                OnPropertyChanged("TextColorMua1");
+            }
+        }
+
+        private SolidColorBrush _textColorBan3;
+        public SolidColorBrush TextColorBan3
+        {
+            get { return _textColorBan3; }
+            set
+            {
+                if (_textColorBan3 == value)
+                    return;
+                _textColorBan3 = value;
+
+                OnPropertyChanged("TextColorBan3");
+            }
+        }
+
+        private SolidColorBrush _textColorBan2;
+        public SolidColorBrush TextColorBan2
+        {
+            get { return _textColorBan2; }
+            set
+            {
+                if (_textColorBan2 == value)
+                    return;
+                _textColorBan2 = value;
+
+                OnPropertyChanged("TextColorBan2");
+            }
+        }
+
+        private SolidColorBrush _textColorBan1;
+        public SolidColorBrush TextColorBan1
+        {
+            get { return _textColorBan1; }
+            set
+            {
+                if (_textColorBan1 == value)
+                    return;
+                _textColorBan1 = value;
+
+                OnPropertyChanged("TextColorBan1");
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnPropertyChanged(string propertyName)
@@ -267,13 +365,6 @@ namespace PhoneApp1.Data
         public double DBanGia2 { get; set; }
         public double DBanGia3 { get; set; }
 
-        public SolidColorBrush TextColor { get; set; }
-        public SolidColorBrush TextColorMua3 { get; set; }
-        public SolidColorBrush TextColorMua2 { get; set; }
-        public SolidColorBrush TextColorMua1 { get; set; }
-        public SolidColorBrush TextColorBan3 { get; set; }
-        public SolidColorBrush TextColorBan2 { get; set; }
-        public SolidColorBrush TextColorBan1 { get; set; }
         #endregion
 
         public RowData()
@@ -287,10 +378,12 @@ namespace PhoneApp1.Data
             var data = row.Split('|');
 
             MaCk = data[Constant.Int_MaCk];
+            TenCty = DataService.Instance.ThongTinCty[MaCk];
             IsSelected = DataService.Instance.IsInHotList(MaCk);
             ThamChieu = data[Constant.Int_ThamChieu];
             Tran = data[Constant.Int_Tran];
             San = data[Constant.Int_San];
+
             MuaGia3 = data[Constant.Int_MuaGia3];
             MuaKL3 = StringHelper.FormatInt(data[Constant.Int_MuaKL3]);
             MuaGia2 = data[Constant.Int_MuaGia2];
@@ -303,19 +396,22 @@ namespace PhoneApp1.Data
             BanKL2 = StringHelper.FormatInt(data[Constant.Int_BanKL2]);
             BanGia1 = data[Constant.Int_BanGia1];
             BanKL1 = StringHelper.FormatInt(data[Constant.Int_BanKL1]);
+
             GiaKhop = data[Constant.Int_GiaKhop];
 
             KLTH = StringHelper.FormatInt(data[Constant.Int_KLTH]);
             TKLGD = StringHelper.FormatInt(data[Constant.Int_TKLGD]);
 
-            DThamChieu = StringHelper.ParseDouble(data[Constant.Int_ThamChieu]);
-            DTran = StringHelper.ParseDouble(data[Constant.Int_Tran]);
-            DSan = StringHelper.ParseDouble(data[Constant.Int_San]);
-            DGiaKhop = StringHelper.ParseDouble(data[Constant.Int_GiaKhop]);
+            DThamChieu = StringHelper.ParseDouble(ThamChieu);
+            DTran = StringHelper.ParseDouble(Tran);
+            DSan = StringHelper.ParseDouble(San);
 
-            ThayDoi = (DGiaKhop == 0) ? "0" : Math.Round((DGiaKhop - DThamChieu) * 100 / DThamChieu, 1).ToString("N1");
+            UpdateTextColor();
+        }
 
-            TenCty = DataService.Instance.ThongTinCty[MaCk];
+        public void UpdateTextColor()
+        {
+            DGiaKhop = StringHelper.ParseDouble(GiaKhop);
 
             DMuaGia1 = StringHelper.ParseDouble(MuaGia1);
             DMuaGia2 = StringHelper.ParseDouble(MuaGia2);
@@ -325,11 +421,8 @@ namespace PhoneApp1.Data
             DBanGia2 = StringHelper.ParseDouble(BanGia2);
             DBanGia3 = StringHelper.ParseDouble(BanGia3);
 
-            UpdateTextColor();
-        }
+            ThayDoi = (DGiaKhop == 0) ? "0" : Math.Round((DGiaKhop - DThamChieu) * 100 / DThamChieu, 1).ToString("N1");
 
-        public void UpdateTextColor()
-        {
             TextColor = GetTextColor(DThamChieu, DGiaKhop, DTran, DSan);
             TextColorMua1 = GetTextColor(DThamChieu, DMuaGia1, DTran, DSan);
             TextColorMua2 = GetTextColor(DThamChieu, DMuaGia2, DTran, DSan);
