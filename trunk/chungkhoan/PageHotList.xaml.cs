@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
@@ -36,6 +37,7 @@ namespace PhoneApp1
             this.txtExcelFileUrl.Select(0, this.txtExcelFileUrl.Text.Length);
         }
 
+        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
         void btnSave_Click(object sender, RoutedEventArgs e)
         {
             IsolatedStorageFile myStore = IsolatedStorageFile.GetUserStoreForApplication();
