@@ -154,8 +154,8 @@ namespace PhoneApp1
 
         void appBtnACB_Click(object sender, EventArgs e)
         {
-            DataService.Mode = DataService.Mode == DataService.DataSource.HSX ? DataService.DataSource.HNX : DataService.DataSource.HSX;
-            tbSan.Text = DataService.Mode.ToString();
+            //DataService.Mode = DataService.Mode == DataService.DataSource.HSX ? DataService.DataSource.HNX : DataService.DataSource.HSX;
+            //tbSan.Text = DataService.Mode.ToString();
             this.RefreshData();
         }
         #endregion
