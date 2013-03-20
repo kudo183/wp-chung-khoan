@@ -43,7 +43,7 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" FontWeight="Bold" Text="{Binding ThamChieu}" Foreground="Yellow"/>
                 <TextBlock Grid.Column="1" FontWeight="Bold" Text="{Binding Tran}" Foreground="#FFFF00FF"/>
-                <TextBlock Grid.Column="2" FontWeight="Bold" Text="{Binding San}" Foreground="Red"/>
+                <TextBlock Grid.Column="2" FontWeight="Bold" Text="{Binding San}" Foreground="Cyan"/>
             </Grid>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
