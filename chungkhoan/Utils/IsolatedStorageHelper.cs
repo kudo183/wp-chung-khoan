@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.IO.IsolatedStorage;
 
 namespace PhoneApp1.Utils
@@ -10,6 +11,7 @@ namespace PhoneApp1.Utils
             return IsolatedStorageFile.GetUserStoreForApplication();
         }
 
+        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
         public static string ReadFile(string fileName)
         {
             using (var isoFileStream = new IsolatedStorageFileStream(fileName, FileMode.OpenOrCreate, GetStore()))
@@ -21,6 +23,7 @@ namespace PhoneApp1.Utils
             }
         }
 
+        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
         public static void WriteFile(string fileName, string content)
         {
             using (var isoFileStream = new IsolatedStorageFileStream(fileName, FileMode.OpenOrCreate, GetStore()))
