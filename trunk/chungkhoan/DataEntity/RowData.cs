@@ -423,36 +423,13 @@ namespace PhoneApp1.Data
 
             ThayDoi = (DGiaKhop == 0) ? "0" : Math.Round((DGiaKhop - DThamChieu) * 100 / DThamChieu, 1).ToString("N1");
 
-            TextColor = GetTextColor(DThamChieu, DGiaKhop, DTran, DSan);
-            TextColorMua1 = GetTextColor(DThamChieu, DMuaGia1, DTran, DSan);
-            TextColorMua2 = GetTextColor(DThamChieu, DMuaGia2, DTran, DSan);
-            TextColorMua3 = GetTextColor(DThamChieu, DMuaGia3, DTran, DSan);
-            TextColorBan1 = GetTextColor(DThamChieu, DBanGia1, DTran, DSan);
-            TextColorBan2 = GetTextColor(DThamChieu, DBanGia2, DTran, DSan);
-            TextColorBan3 = GetTextColor(DThamChieu, DBanGia3, DTran, DSan);
-        }
-
-        public static SolidColorBrush GetTextColor(double giaThamChieu, double gia, double tran, double san)
-        {
-            if (gia == tran)
-            {
-                return Constant.SolidColorBrush_MauTran;
-            }
-            if (gia == san)
-            {
-                return Constant.SolidColorBrush_MauSan;
-            }
-
-            if (gia > giaThamChieu)
-            {
-                return Constant.SolidColorBrush_MauTang;
-            }
-            if (gia < giaThamChieu)
-            {
-                return Constant.SolidColorBrush_MauGiam;
-            }
-
-            return Constant.SolidColorBrush_MauThamChieu;
+            TextColor = TextColorUtils.GetTextColor(DThamChieu, DGiaKhop, DTran, DSan);
+            TextColorMua1 = TextColorUtils.GetTextColor(DThamChieu, DMuaGia1, DTran, DSan);
+            TextColorMua2 = TextColorUtils.GetTextColor(DThamChieu, DMuaGia2, DTran, DSan);
+            TextColorMua3 = TextColorUtils.GetTextColor(DThamChieu, DMuaGia3, DTran, DSan);
+            TextColorBan1 = TextColorUtils.GetTextColor(DThamChieu, DBanGia1, DTran, DSan);
+            TextColorBan2 = TextColorUtils.GetTextColor(DThamChieu, DBanGia2, DTran, DSan);
+            TextColorBan3 = TextColorUtils.GetTextColor(DThamChieu, DBanGia3, DTran, DSan);
         }
     }
 }
