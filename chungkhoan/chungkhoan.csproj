@@ -86,6 +86,7 @@
     <Compile Include="DataService\IDataService.cs" />
     <Compile Include="DataEntity\SampleData.cs" />
     <Compile Include="Helper\StringHelper.cs" />
+    <Compile Include="Helper\TextColorUtils.cs" />
     <Compile Include="PageBrowser.xaml.cs">
       <DependentUpon>PageBrowser.xaml</DependentUpon>
     </Compile>
