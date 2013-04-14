@@ -27,9 +27,27 @@
                     <TextBlock x:Name="tbTime" Text="03:05" Width="55" Margin="3,0,0,0"/>
                     <TextBlock x:Name="tbSan" Text="HSX" FontWeight="Bold"/>
                 </StackPanel>
-                <Button x:Name="btnHot" Content="Hot"/>
-                <Button x:Name="btnVN30" Content="Top"/>
-                <Button x:Name="btnAll" Content="All"/>
+                <Button Content="Hot" Width="120" x:Name="btnDataMode" Click="btnDataMode_Click">
+                    <Controls:ContextMenuService.ContextMenu>
+                        <Controls:ContextMenu VerticalOffset="0" IsZoomEnabled="False" x:Name="DataModeContextMenu">
+                            <Controls:MenuItem Header="All" Click="DataModeMenuItem_Click"/>
+                            <Controls:MenuItem Header="Hot" Click="DataModeMenuItem_Click"/>
+                            <Controls:MenuItem Header="VN30" Click="DataModeMenuItem_Click"/>
+                        </Controls:ContextMenu>
+                    </Controls:ContextMenuService.ContextMenu>
+                </Button>
+                <Button Content="All" Width="120" x:Name="btnPriceMode" Click="btnPriceMode_Click">
+                    <Controls:ContextMenuService.ContextMenu>
+                        <Controls:ContextMenu VerticalOffset="0" IsZoomEnabled="False" x:Name="PriceModeContextMenu">
+                            <Controls:MenuItem Header="All" Click="PriceModeMenuItem_Click"/>
+                            <Controls:MenuItem Header="Tran" Click="PriceModeMenuItem_Click"/>
+                            <Controls:MenuItem Header="San" Click="PriceModeMenuItem_Click"/>
+                            <Controls:MenuItem Header="Tang" Click="PriceModeMenuItem_Click"/>
+                            <Controls:MenuItem Header="Giam" Click="PriceModeMenuItem_Click"/>
+                            <Controls:MenuItem Header="TC" Click="PriceModeMenuItem_Click"/>
+                        </Controls:ContextMenu>
+                    </Controls:ContextMenuService.ContextMenu>
+                </Button>
                 <TextBox x:Name="txtSearch" Width="90" TabIndex="-1">
                     <TextBox.InputScope>
                         <InputScope>
@@ -37,11 +55,10 @@
                         </InputScope>
                     </TextBox.InputScope>
                 </TextBox>
-                <Button x:Name="btnTran" Content="Tran"/>
-                <Button x:Name="btnSan" Content="San"/>
-                <Button x:Name="btnThamChieu" Content="TC"/>
             </StackPanel>
+            
             <Control:SecurityTable Grid.Row="2" x:Name="securityTable" d:DataContext="{Binding SecurityTableData}"/>
+            
             <Grid Grid.Row="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>

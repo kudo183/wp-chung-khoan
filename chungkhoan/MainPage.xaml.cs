@@ -15,14 +15,21 @@ namespace PhoneApp1
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        enum Mode
+        enum DataMode
         {
             All,
+            Hot,
+            Vn30
+        }
+
+        enum PriceMode
+        {
+            All,
+            Tang,
+            Giam,
             Tran,
             San,
-            Hot,
-            Vn30,
-            ThamChieu
+            TC
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
@@ -49,7 +56,10 @@ namespace PhoneApp1
         }
 
         #region property
-        private static Mode _mode = Mode.Hot;
+
+        private static DataMode _dataMode = DataMode.Hot;
+        private static PriceMode _priceMode = PriceMode.All;
+
         private static bool _isFirstLoad = true;
 
         private readonly DispatcherTimer _timer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 1) };
@@ -59,18 +69,14 @@ namespace PhoneApp1
 
         private volatile bool _isBusy = false;
         private string _searchText;
+
         #endregion
 
         #region Constructor
         public MainPage()
         {
             this.InitializeComponent();
-            this.btnAll.Click += btnAll_Click;
-            this.btnTran.Click += btnTran_Click;
-            this.btnSan.Click += btnSan_Click;
-            this.btnThamChieu.Click += btnThamChieu_Click;
-            this.btnHot.Click += btnQuanTam_Click;
-            this.btnVN30.Click += btnVN30_Click;
+
             this.txtSearch.TextChanged += txtSearch_TextChanged;
             this.txtSearch.GotFocus += txtSearch_GotFocus;
             this._renderCollection.PumpingFinished += _renderCollection_PumpingFinished;
@@ -103,6 +109,7 @@ namespace PhoneApp1
         }
 
         #region timer
+
         void currentTimer_Tick(object sender, EventArgs e)
         {
             tbTime.Text = DateTime.Now.ToString("hh:mm");
@@ -113,12 +120,14 @@ namespace PhoneApp1
             this._timer.Stop();
             this.UpdateUI();
         }
+
         #endregion
 
         #region application bar button
+
         void appBtnHotList_Click(object sender, EventArgs e)
         {
-            MainPage._mode = Mode.Hot;
+            MainPage._dataMode = DataMode.Hot;
             this.NavigationService.Navigate(new Uri("/PageHotList.xaml", UriKind.Relative));
         }
 
@@ -158,9 +167,11 @@ namespace PhoneApp1
             //tbSan.Text = DataService.Mode.ToString();
             this.RefreshData();
         }
+
         #endregion
 
         #region menu
+
         void txtSearch_GotFocus(object sender, RoutedEventArgs e)
         {
             this.txtSearch.Select(0, this.txtSearch.Text.Length);
@@ -172,44 +183,76 @@ namespace PhoneApp1
             this._timer.Start();
         }
 
-        void btnThamChieu_Click(object sender, RoutedEventArgs e)
+        private void DataModeMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            this.switchMode(Mode.ThamChieu);
+            string action = (sender as MenuItem).Header.ToString();
+            btnDataMode.Content = action;
+
+            switch (action)
+            {
+                case "All":
+                    _dataMode = DataMode.All;
+                    break;
+                case "Hot":
+                    _dataMode = DataMode.Hot;
+                    break;
+                case "VN30":
+                    _dataMode = DataMode.Vn30;
+                    break;
+            }
+
+            this.SwitchMode();
         }
 
-        void btnAll_Click(object sender, RoutedEventArgs e)
+        private void PriceModeMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            this.switchMode(Mode.All);
+            string action = (sender as MenuItem).Header.ToString();
+            btnPriceMode.Content = action;
+
+            switch (action)
+            {
+                case "All":
+                    _priceMode = PriceMode.All;
+                    break;
+                case "Tang":
+                    _priceMode = PriceMode.Tang;
+                    break;
+                case "Giam":
+                    _priceMode = PriceMode.Giam;
+                    break;
+                case "Tran":
+                    _priceMode = PriceMode.Tran;
+                    break;
+                case "San":
+                    _priceMode = PriceMode.San;
+                    break;
+                case "TC":
+                    _priceMode = PriceMode.TC;
+                    break;
+            }
+
+            this.SwitchMode();
         }
 
-        void btnVN30_Click(object sender, RoutedEventArgs e)
+        private void btnPriceMode_Click(object sender, RoutedEventArgs e)
         {
-            this.switchMode(Mode.Vn30);
+            this.PriceModeContextMenu.IsOpen = true;
         }
 
-        void btnQuanTam_Click(object sender, RoutedEventArgs e)
+        private void btnDataMode_Click(object sender, RoutedEventArgs e)
         {
-            this.switchMode(Mode.Hot);
+            this.DataModeContextMenu.IsOpen = true;
         }
 
-        void btnSan_Click(object sender, RoutedEventArgs e)
-        {
-            this.switchMode(Mode.San);
-        }
-
-        void btnTran_Click(object sender, RoutedEventArgs e)
-        {
-            this.switchMode(Mode.Tran);
-        }
         #endregion
 
         #region method
-        void switchMode(Mode m)
+
+        void SwitchMode()
         {
             Busy(true);
             this.txtSearch.Text = string.Empty;
             this._searchText = string.Empty;
-            MainPage._mode = m;
             this.UpdateUI();
         }
 
@@ -245,87 +288,23 @@ namespace PhoneApp1
         {
             this.statistic.DataContext = DataService.Instance.StatisticData;
 
-            this.btnAll.IsEnabled = true;
-            this.btnTran.IsEnabled = true;
-            this.btnSan.IsEnabled = true;
-            this.btnHot.IsEnabled = true;
-            this.btnThamChieu.IsEnabled = true;
-            this.btnVN30.IsEnabled = true;
-
-            IEnumerable<RowData> renderDatas = null;
-
-            switch (_mode)
+            if (DataService.Instance.RowsData == null)
             {
-                case Mode.All:
-                    if (string.IsNullOrEmpty(this._searchText) == false)
-                    {
-                        renderDatas = DataService.Instance.RowsData.Where(p => p.MaCk == this._searchText);
-                    }
-                    else
-                    {
-                        renderDatas = DataService.Instance.RowsData;
-                    }
-                    this.btnAll.IsEnabled = false;
-                    break;
-                case Mode.Hot:
-                    if (string.IsNullOrEmpty(this._searchText) == false)
-                    {
-                        renderDatas = DataService.Instance.RowsData.Where(p => p.MaCk == this._searchText && DataService.Instance.IsInHotList(p.MaCk));
-                    }
-                    else
-                    {
-                        renderDatas = DataService.Instance.RowsData.Where(p => DataService.Instance.IsInHotList(p.MaCk));
-                    }
-                    this.btnHot.IsEnabled = false;
-                    break;
-                case Mode.Tran:
-                    if (string.IsNullOrEmpty(this._searchText) == false)
-                    {
-                        renderDatas = DataService.Instance.RowsData.Where(p => p.DGiaKhop == p.DTran && p.MaCk == this._searchText);
-                    }
-                    else
-                    {
-                        renderDatas = DataService.Instance.RowsData.Where(p => p.DGiaKhop == p.DTran);
-                    }
-                    this.btnTran.IsEnabled = false;
-                    break;
-                case Mode.ThamChieu:
-                    if (string.IsNullOrEmpty(this._searchText) == false)
-                    {
-                        renderDatas = DataService.Instance.RowsData.Where(p => p.DGiaKhop == p.DThamChieu && p.MaCk == this._searchText);
-                    }
-                    else
-                    {
-                        renderDatas = DataService.Instance.RowsData.Where(p => p.DGiaKhop == p.DThamChieu);
-                    }
-                    this.btnThamChieu.IsEnabled = false;
-                    break;
-                case Mode.San:
-                    if (string.IsNullOrEmpty(this._searchText) == false)
-                    {
-                        renderDatas = DataService.Instance.RowsData.Where(p => p.DGiaKhop == p.DSan && p.MaCk == this._searchText);
-                    }
-                    else
-                    {
-                        renderDatas = DataService.Instance.RowsData.Where(p => p.DGiaKhop == p.DSan);
-                    }
-                    this.btnSan.IsEnabled = false;
-                    break;
-                case Mode.Vn30:
-                    if (string.IsNullOrEmpty(this._searchText) == false)
-                    {
-                        renderDatas = DataService.Instance.RowsData.Where(p => p.MaCk == this._searchText && DataService.Instance.IsInTopList(p.Index));
-                    }
-                    else
-                    {
-                        renderDatas = DataService.Instance.RowsData.Where(p => DataService.Instance.IsInTopList(p.Index));
-                    }
-                    this.btnVN30.IsEnabled = false;
-                    break;
+                return;
             }
 
-            if (renderDatas == null)
-                return;
+            IEnumerable<RowData> renderDatas = DataService.Instance.RowsData;
+
+            Func<RowData, bool> func = FilterFunc(_priceMode, _dataMode);
+
+            if (func != null)
+            {
+                renderDatas = renderDatas.Where(func);
+            }
+            if (string.IsNullOrEmpty(this._searchText) == false)
+            {
+                renderDatas = renderDatas.Where(p => p.MaCk == this._searchText);
+            }
 
             var count = renderDatas.Count();
             for (var i = 0; i < count; i++)
@@ -343,28 +322,87 @@ namespace PhoneApp1
 
                 foreach (var rowData in this._renderCollection.RenderCollection)
                 {
-                    var row = dicData[rowData.MaCk];                    
-                    rowData.GiaKhop = row.GiaKhop;
-                    
-                    rowData.KLTH = row.KLTH;
-                    rowData.TKLGD = row.TKLGD;
-                    rowData.MuaGia1 = row.MuaGia1;
-                    rowData.MuaGia2 = row.MuaGia2;
-                    rowData.MuaGia3 = row.MuaGia3;
-                    rowData.MuaKL1 = row.MuaKL1;
-                    rowData.MuaKL2 = row.MuaKL2;
-                    rowData.MuaKL3 = row.MuaKL3;
-                    rowData.BanGia1 = row.BanGia1;
-                    rowData.BanGia2 = row.BanGia2;
-                    rowData.BanGia3 = row.BanGia3;
-                    rowData.BanKL1 = row.BanKL1;
-                    rowData.BanKL2 = row.BanKL2;
-                    rowData.BanKL3 = row.BanKL3;
-
-                    rowData.UpdateTextColor();
+                    var data = dicData[rowData.MaCk];
+                    rowData.UpdateRowData(data);
                 }
             }
         }
+
         #endregion
+
+        private static Func<RowData, bool> DataModeFilterFunc(DataMode dataMode)
+        {
+            Func<RowData, bool> func = null;
+
+            switch (dataMode)
+            {
+                case DataMode.All:
+                    break;
+                case DataMode.Hot:
+                    func = (p => DataService.Instance.IsInHotList(p.MaCk));
+                    break;
+                case DataMode.Vn30:
+                    func = (p => DataService.Instance.IsInTopList(p.Index));
+                    break;
+            }
+
+            return func;
+        }
+
+        private static Func<RowData, bool> PriceModeFilterFunc(PriceMode priceMode)
+        {
+            Func<RowData, bool> func = (p => true);
+
+            switch (priceMode)
+            {
+                case PriceMode.All:
+                    break;
+                case PriceMode.Tran:
+                    func = (p => p.DGiaKhop == p.DTran);
+                    break;
+                case PriceMode.TC:
+                    func = (p => p.DGiaKhop == p.DThamChieu);
+                    break;
+                case PriceMode.San:
+                    func = (p => p.DGiaKhop == p.DSan);
+                    break;
+                case PriceMode.Tang:
+                    func = (p => p.DGiaKhop > p.DThamChieu);
+                    break;
+                case PriceMode.Giam:
+                    func = (p => p.DGiaKhop < p.DThamChieu);
+                    break;
+            }
+
+            return func;
+        }
+
+        private static Func<RowData, bool> FilterFunc(PriceMode priceMode, DataMode dataMode)
+        {
+            var func1 = PriceModeFilterFunc(priceMode);
+            var func2 = DataModeFilterFunc(dataMode);
+
+            return AndPredict(func1, func2);
+        }
+
+        private static Func<T, bool> AndPredict<T>(Func<T, bool> func1, Func<T, bool> func2)
+        {
+            if (func1 == null && func2 == null)
+            {
+                return null;
+            }
+
+            if (func1 == null)
+            {
+                return func2;
+            }
+
+            if (func2 == null)
+            {
+                return func1;
+            }
+
+            return (p => func1(p) && func2(p));
+        }
     }
 }

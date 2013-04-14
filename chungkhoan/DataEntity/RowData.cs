@@ -431,5 +431,27 @@ namespace PhoneApp1.Data
             TextColorBan2 = TextColorUtils.GetTextColor(DThamChieu, DBanGia2, DTran, DSan);
             TextColorBan3 = TextColorUtils.GetTextColor(DThamChieu, DBanGia3, DTran, DSan);
         }
+
+        public void UpdateRowData(RowData row)
+        {
+            this.GiaKhop = row.GiaKhop;
+
+            this.KLTH = row.KLTH;
+            this.TKLGD = row.TKLGD;
+            this.MuaGia1 = row.MuaGia1;
+            this.MuaGia2 = row.MuaGia2;
+            this.MuaGia3 = row.MuaGia3;
+            this.MuaKL1 = row.MuaKL1;
+            this.MuaKL2 = row.MuaKL2;
+            this.MuaKL3 = row.MuaKL3;
+            this.BanGia1 = row.BanGia1;
+            this.BanGia2 = row.BanGia2;
+            this.BanGia3 = row.BanGia3;
+            this.BanKL1 = row.BanKL1;
+            this.BanKL2 = row.BanKL2;
+            this.BanKL3 = row.BanKL3;
+
+            this.UpdateTextColor();
+        }
     }
 }
