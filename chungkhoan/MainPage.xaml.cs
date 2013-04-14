@@ -77,6 +77,8 @@ namespace PhoneApp1
         {
             this.InitializeComponent();
 
+            this.BackKeyPress += MainPage_BackKeyPress;
+
             this.txtSearch.TextChanged += txtSearch_TextChanged;
             this.txtSearch.GotFocus += txtSearch_GotFocus;
             this._renderCollection.PumpingFinished += _renderCollection_PumpingFinished;
@@ -90,6 +92,15 @@ namespace PhoneApp1
 
             Global.ExcelFileUrl = IsolatedStorageHelper.ReadFile(Constant.ExcelFileUrl);
         }
+
+        void MainPage_BackKeyPress(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to exit ?", "", MessageBoxButton.OKCancel) == MessageBoxResult.Cancel)
+            {
+                e.Cancel = true;
+            }
+        }
+
         #endregion
 
         void _renderCollection_PumpingFinished(object sender, EventArgs e)
