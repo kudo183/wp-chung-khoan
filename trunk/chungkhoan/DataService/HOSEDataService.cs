@@ -269,10 +269,7 @@ namespace PhoneApp1.Data
         {
             if (this._isGettingData == true)
             {
-                if (callback != null)
-                {
-                    callback();
-                }
+                this._getDataCompleteCallback = callback;
                 return;
             }
 
