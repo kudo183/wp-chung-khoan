@@ -114,7 +114,7 @@ namespace PhoneApp1
             if (listBox.SelectedValue == null)
                 return;
 
-            string url = "http://data.cophieu68.com/wap/historyprice.php?id=" + listBox.SelectedValue;
+            string url = "http://www.cophieu68.vn/wap/historyprice.php?id=" + listBox.SelectedValue;
             url = HttpUtility.UrlEncode(url);
             NavigationService.Navigate(new Uri("/PageBrowser.xaml?url=" + url, UriKind.Relative));
         }
