@@ -60,7 +60,7 @@ namespace PhoneApp1.Data
         {
             _hotList = IsolatedStorageHelper.ReadFile(DataService.GetHotListFileName()).Split(new[] { "*" }, StringSplitOptions.RemoveEmptyEntries);
 
-            this._client.GetList30StockCompleted += _client_GetList30StockCompleted;
+            this._client.GetListStockCompleted += _client_GetListStockCompleted;            
             this._client.GetLiveTotalMKTCompleted += client_GetLiveTotalMKTCompleted;
             this._client.GetLiveSecurityCompleted += client_GetLiveSecurityCompleted;
             this._client.fGetSTOCKROOMCompleted += _client_fGetSTOCKROOMCompleted;
@@ -75,10 +75,11 @@ namespace PhoneApp1.Data
                 var info = company.Split(new[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
                 this._thongTinCty.Add(info[0], info[1]);
             }
-            this._client.GetList30StockAsync();
+            
+            this._client.GetListStockAsync("VN30");
         }
 
-        void _client_GetList30StockCompleted(object sender, GetList30StockCompletedEventArgs e)
+        void _client_GetListStockCompleted(object sender, GetListStockCompletedEventArgs e)
         {
             this._VN30List.Clear();
             var temp = e.Result.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
