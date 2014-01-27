@@ -176,7 +176,13 @@
     <None Include="Service References\HoSTC_Service\PhoneApp1.HoSTC_Service.fUserOnlineResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\HoSTC_Service\PhoneApp1.HoSTC_Service.GetList30StockResponse.datasource">
+    <None Include="Service References\HoSTC_Service\PhoneApp1.HoSTC_Service.GetListETFResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HoSTC_Service\PhoneApp1.HoSTC_Service.GetListIndexCodeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\HoSTC_Service\PhoneApp1.HoSTC_Service.GetListStockResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\HoSTC_Service\PhoneApp1.HoSTC_Service.GetListStockWarningResponse.datasource">
