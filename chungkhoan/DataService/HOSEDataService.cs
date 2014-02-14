@@ -60,7 +60,7 @@ namespace PhoneApp1.Data
         {
             _hotList = IsolatedStorageHelper.ReadFile(DataService.GetHotListFileName()).Split(new[] { "*" }, StringSplitOptions.RemoveEmptyEntries);
 
-            this._client.GetListStockCompleted += _client_GetListStockCompleted;            
+            this._client.GetListStockCompleted += _client_GetListStockCompleted;
             this._client.GetLiveTotalMKTCompleted += client_GetLiveTotalMKTCompleted;
             this._client.GetLiveSecurityCompleted += client_GetLiveSecurityCompleted;
             this._client.fGetSTOCKROOMCompleted += _client_fGetSTOCKROOMCompleted;
@@ -75,17 +75,31 @@ namespace PhoneApp1.Data
                 var info = company.Split(new[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
                 this._thongTinCty.Add(info[0], info[1]);
             }
-            
+
             this._client.GetListStockAsync("VN30");
         }
 
         void _client_GetListStockCompleted(object sender, GetListStockCompletedEventArgs e)
         {
             this._VN30List.Clear();
-            var temp = e.Result.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-            for (var i = 0; i < temp.Length - 1; i++)
+            var temp = e.Result.Split(new[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
+
+            string[] vn30 = null;
+
+            foreach (var s in temp)
             {
-                this._VN30List.Add(int.Parse(temp[i]));
+                var temp1 = s.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+
+                if (temp1[temp1.Length - 1] == "30")
+                {
+                    vn30 = temp1;
+                    break;
+                }
+            }
+
+            for (var i = 0; i < vn30.Length - 1; i++)
+            {
+                this._VN30List.Add(int.Parse(vn30[i]));
             }
             this._client.GetLiveTotalMKTAsync();
         }
