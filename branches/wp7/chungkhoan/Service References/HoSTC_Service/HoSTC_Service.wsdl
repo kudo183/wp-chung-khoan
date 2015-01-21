@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="GetLiveSecurity">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="f_time" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLiveSecurityResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetLiveSecurityResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="fPUT_THROUGHT">
+        <s:complexType />
+      </s:element>
+      <s:element name="fPUT_THROUGHTResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="fPUT_THROUGHTResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="fGetSTOCKROOM">
+        <s:complexType />
+      </s:element>
+      <s:element name="fGetSTOCKROOMResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="fGetSTOCKROOMResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="fUserOnline">
+        <s:complexType />
+      </s:element>
+      <s:element name="fUserOnlineResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="fUserOnlineResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetLiveTotalMKT">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetLiveTotalMKTResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetLiveTotalMKTResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListStockWarning">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetListStockWarningResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetListStockWarningResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListIndexCode">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetListIndexCodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetListIndexCodeResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListStock">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="indexcode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListStockResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetListStockResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListETF">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetListETFResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetListETFResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetLiveSecuritySoapIn">
+    <wsdl:part name="parameters" element="tns:GetLiveSecurity" />
+  </wsdl:message>
+  <wsdl:message name="GetLiveSecuritySoapOut">
+    <wsdl:part name="parameters" element="tns:GetLiveSecurityResponse" />
+  </wsdl:message>
+  <wsdl:message name="fPUT_THROUGHTSoapIn">
+    <wsdl:part name="parameters" element="tns:fPUT_THROUGHT" />
+  </wsdl:message>
+  <wsdl:message name="fPUT_THROUGHTSoapOut">
+    <wsdl:part name="parameters" element="tns:fPUT_THROUGHTResponse" />
+  </wsdl:message>
+  <wsdl:message name="fGetSTOCKROOMSoapIn">
+    <wsdl:part name="parameters" element="tns:fGetSTOCKROOM" />
+  </wsdl:message>
+  <wsdl:message name="fGetSTOCKROOMSoapOut">
+    <wsdl:part name="parameters" element="tns:fGetSTOCKROOMResponse" />
+  </wsdl:message>
+  <wsdl:message name="fUserOnlineSoapIn">
+    <wsdl:part name="parameters" element="tns:fUserOnline" />
+  </wsdl:message>
+  <wsdl:message name="fUserOnlineSoapOut">
+    <wsdl:part name="parameters" element="tns:fUserOnlineResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetLiveTotalMKTSoapIn">
+    <wsdl:part name="parameters" element="tns:GetLiveTotalMKT" />
+  </wsdl:message>
+  <wsdl:message name="GetLiveTotalMKTSoapOut">
+    <wsdl:part name="parameters" element="tns:GetLiveTotalMKTResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetListStockWarningSoapIn">
+    <wsdl:part name="parameters" element="tns:GetListStockWarning" />
+  </wsdl:message>
+  <wsdl:message name="GetListStockWarningSoapOut">
+    <wsdl:part name="parameters" element="tns:GetListStockWarningResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetListIndexCodeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetListIndexCode" />
+  </wsdl:message>
+  <wsdl:message name="GetListIndexCodeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetListIndexCodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetListStockSoapIn">
+    <wsdl:part name="parameters" element="tns:GetListStock" />
+  </wsdl:message>
+  <wsdl:message name="GetListStockSoapOut">
+    <wsdl:part name="parameters" element="tns:GetListStockResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetListETFSoapIn">
+    <wsdl:part name="parameters" element="tns:GetListETF" />
+  </wsdl:message>
+  <wsdl:message name="GetListETFSoapOut">
+    <wsdl:part name="parameters" element="tns:GetListETFResponse" />
+  </wsdl:message>
+  <wsdl:portType name="HoSTC_ServiceSoap">
+    <wsdl:operation name="GetLiveSecurity">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get Live Security Data Table</wsdl:documentation>
+      <wsdl:input message="tns:GetLiveSecuritySoapIn" />
+      <wsdl:output message="tns:GetLiveSecuritySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="fPUT_THROUGHT">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get Put-Throught Data</wsdl:documentation>
+      <wsdl:input message="tns:fPUT_THROUGHTSoapIn" />
+      <wsdl:output message="tns:fPUT_THROUGHTSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="fGetSTOCKROOM">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get Stock Room</wsdl:documentation>
+      <wsdl:input message="tns:fGetSTOCKROOMSoapIn" />
+      <wsdl:output message="tns:fGetSTOCKROOMSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="fUserOnline">
+      <wsdl:input message="tns:fUserOnlineSoapIn" />
+      <wsdl:output message="tns:fUserOnlineSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLiveTotalMKT">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Lấy cac gia tri cua 3 dot</wsdl:documentation>
+      <wsdl:input message="tns:GetLiveTotalMKTSoapIn" />
+      <wsdl:output message="tns:GetLiveTotalMKTSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListStockWarning">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Lấy danh sach cac chung khoan bi canh bao!</wsdl:documentation>
+      <wsdl:input message="tns:GetListStockWarningSoapIn" />
+      <wsdl:output message="tns:GetListStockWarningSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListIndexCode">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Lay danh sanh cac chi so cua bo HOSEINDEX</wsdl:documentation>
+      <wsdl:input message="tns:GetListIndexCodeSoapIn" />
+      <wsdl:output message="tns:GetListIndexCodeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListStock">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Lay danh sanh co phieu cua 1 index</wsdl:documentation>
+      <wsdl:input message="tns:GetListStockSoapIn" />
+      <wsdl:output message="tns:GetListStockSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListETF">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Lay danh sanh ETF</wsdl:documentation>
+      <wsdl:input message="tns:GetListETFSoapIn" />
+      <wsdl:output message="tns:GetListETFSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="HoSTC_ServiceSoap" type="tns:HoSTC_ServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetLiveSecurity">
+      <soap:operation soapAction="http://tempuri.org/GetLiveSecurity" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="fPUT_THROUGHT">
+      <soap:operation soapAction="http://tempuri.org/fPUT_THROUGHT" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="fGetSTOCKROOM">
+      <soap:operation soapAction="http://tempuri.org/fGetSTOCKROOM" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="fUserOnline">
+      <soap:operation soapAction="http://tempuri.org/fUserOnline" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLiveTotalMKT">
+      <soap:operation soapAction="http://tempuri.org/GetLiveTotalMKT" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListStockWarning">
+      <soap:operation soapAction="http://tempuri.org/GetListStockWarning" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListIndexCode">
+      <soap:operation soapAction="http://tempuri.org/GetListIndexCode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListStock">
+      <soap:operation soapAction="http://tempuri.org/GetListStock" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListETF">
+      <soap:operation soapAction="http://tempuri.org/GetListETF" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="HoSTC_ServiceSoap12" type="tns:HoSTC_ServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetLiveSecurity">
+      <soap12:operation soapAction="http://tempuri.org/GetLiveSecurity" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="fPUT_THROUGHT">
+      <soap12:operation soapAction="http://tempuri.org/fPUT_THROUGHT" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="fGetSTOCKROOM">
+      <soap12:operation soapAction="http://tempuri.org/fGetSTOCKROOM" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="fUserOnline">
+      <soap12:operation soapAction="http://tempuri.org/fUserOnline" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLiveTotalMKT">
+      <soap12:operation soapAction="http://tempuri.org/GetLiveTotalMKT" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListStockWarning">
+      <soap12:operation soapAction="http://tempuri.org/GetListStockWarning" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListIndexCode">
+      <soap12:operation soapAction="http://tempuri.org/GetListIndexCode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListStock">
+      <soap12:operation soapAction="http://tempuri.org/GetListStock" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListETF">
+      <soap12:operation soapAction="http://tempuri.org/GetListETF" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="HoSTC_Service">
+    <wsdl:port name="HoSTC_ServiceSoap" binding="tns:HoSTC_ServiceSoap">
+      <soap:address location="http://www.vse.org.vn/LS/HoSTC_Service.asmx" />
+    </wsdl:port>
+    <wsdl:port name="HoSTC_ServiceSoap12" binding="tns:HoSTC_ServiceSoap12">
+      <soap12:address location="http://www.vse.org.vn/LS/HoSTC_Service.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
